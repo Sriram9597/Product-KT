@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Advanced AI Cloud Engineering & DevOps Program — 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f5f7ff;
+    --surface: #ffffff;
+    --surface2: #eef1ff;
+    --accent: #2563eb;
+    --accent2: #7c3aed;
+    --accent3: #1e40af;
+    --accent-light: #bfdbfe;
+    --accent-xlight: #eff6ff;
+    --text: #0f172a;
+    --muted: #475569;
+    --muted2: #64748b;
+    --border: rgba(37,99,235,0.15);
+    --border-strong: rgba(37,99,235,0.3);
+    --glow: 0 0 40px rgba(37,99,235,0.12);
+    --shadow: 0 4px 24px rgba(15,23,42,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .progress-bar {
+    position: fixed; top: 0; left: 0; z-index: 200;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #60a5fa);
+    transition: width 0.1s;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(37,99,235,0.35);
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,247,255,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-start { display: flex; align-items: center; gap: 14px; }
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.7);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .nav-back:hover {
+    color: var(--accent);
+    border-color: rgba(37,99,235,0.45);
+    background: rgba(37,99,235,0.08);
+    transform: translateX(-2px);
+  }
+  .nav-back span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .nav-logo { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--accent); letter-spacing: 0.04em; font-weight: 700; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+    background-image:
+      linear-gradient(rgba(37,99,235,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: var(--bg);
+  }
+  .hero-orb { position: absolute; border-radius: 50%; filter: blur(90px); animation: pulse 7s ease-in-out infinite alternate; pointer-events: none; }
+  .hero-orb-1 { width: 600px; height: 600px; background: rgba(37,99,235,0.09); top: -150px; left: -150px; }
+  .hero-orb-2 { width: 400px; height: 400px; background: rgba(124,58,237,0.07); bottom: 0; right: -100px; animation-delay: 3s; }
+  .hero-orb-3 { width: 300px; height: 300px; background: rgba(96,165,250,0.06); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 5s; }
+  @keyframes pulse { from { transform: scale(1); opacity: 0.6; } to { transform: scale(1.15); opacity: 1; } }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    padding: 7px 20px;
+    font-size: 12px; font-family: 'Montserrat', sans-serif;
+    color: var(--accent); letter-spacing: 0.07em; margin-bottom: 36px;
+    animation: fadeDown 0.8s ease both; font-weight: 600;
+  }
+  .hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(42px, 6.5vw, 84px);
+    font-weight: 900; line-height: 0.96; letter-spacing: -0.03em;
+    animation: fadeDown 0.8s ease 0.1s both; color: var(--text);
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--accent), #60a5fa, var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub { margin-top: 24px; font-size: 17px; color: var(--muted); max-width: 560px; line-height: 1.75; animation: fadeDown 0.8s ease 0.2s both; font-weight: 400; }
+  .hero-cta { margin-top: 44px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; animation: fadeDown 0.8s ease 0.3s both; }
+  .btn { padding: 13px 30px; border-radius: 9px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.22s; display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; box-shadow: 0 4px 18px rgba(37,99,235,0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.4); background: #1d4ed8; }
+  .btn-ghost { background: rgba(255,255,255,0.75); color: var(--text); border: 1.5px solid var(--border-strong); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); background: var(--accent-xlight); }
+
+  .hero-stats { margin-top: 76px; display: flex; gap: 56px; flex-wrap: wrap; justify-content: center; animation: fadeUp 1s ease 0.5s both; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Montserrat', sans-serif; font-size: 42px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; font-weight: 500; }
+
+  .track-row { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; justify-content: center; animation: fadeUp 1s ease 0.6s both; }
+  .track-pill { display: flex; align-items: center; gap: 14px; border-radius: 14px; padding: 14px 22px; border: 1.5px solid; background: rgba(255,255,255,0.7); }
+  .track-pill.weekday { border-color: var(--border-strong); }
+  .track-pill.weekend { border-color: rgba(124,58,237,0.3); }
+  .track-num { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .track-pill.weekend .track-num { color: var(--accent2); }
+  .track-lbl { font-size: 13px; color: var(--muted); font-weight: 500; }
+  .track-sub { font-size: 11px; color: var(--muted2); }
+
+  section { position: relative; z-index: 1; padding: 96px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-family: 'Montserrat', sans-serif; font-size: 10px; color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .section-tag::before { content: ''; display: block; width: 28px; height: 2px; background: var(--accent); border-radius: 2px; }
+  .section-title { font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 18px; color: var(--text); }
+  .section-desc { color: var(--muted); font-size: 15px; line-height: 1.8; max-width: 600px; margin-bottom: 52px; font-weight: 400; }
+
+  .divider { position: relative; z-index: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); margin: 0 40px; }
+
+  .expected-wrap { position: relative; z-index: 1; background: #fff; }
+  .expected-section { position: relative; z-index: 1; padding: 96px 40px; max-width: 1100px; margin: 0 auto; }
+  .expected-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 44px; margin-bottom: 36px; }
+  .expect-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 28px 32px; position: relative; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+  .expect-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), #60a5fa); }
+  .expect-card:hover { transform: translateY(-3px); box-shadow: var(--glow); border-color: var(--border-strong); }
+  .expect-icon { font-size: 28px; margin-bottom: 12px; }
+  .expect-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 9px; line-height: 1.35; }
+  .expect-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+  .expect-card.must { border-color: rgba(37,99,235,0.28); background: var(--accent-xlight); }
+  .expect-card.must::before { background: linear-gradient(90deg, var(--accent3), var(--accent)); }
+  .expected-cta { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; border-radius: 14px; padding: 26px 38px; display: flex; align-items: center; gap: 20px; box-shadow: 0 8px 28px rgba(37,99,235,0.22); }
+  .expected-cta .cta-icon { font-size: 34px; flex-shrink: 0; }
+  .expected-cta .cta-main { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+  .expected-cta .cta-sub { font-size: 13px; font-weight: 400; opacity: 0.87; margin-top: 4px; }
+
+  .overview-wrap { position: relative; z-index: 1; background-image: linear-gradient(rgba(37,99,235,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.055) 1px, transparent 1px); background-size: 48px 48px; background-color: var(--bg); }
+  .overview-modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+  .ov-mod-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 20px 22px; display: flex; align-items: center; gap: 14px; transition: all 0.22s; box-shadow: var(--shadow); }
+  .ov-mod-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--glow); }
+  .ov-mod-num { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-xlight); border: 1px solid var(--border-strong); border-radius: 8px; padding: 5px 9px; white-space: nowrap; flex-shrink: 0; }
+  .ov-mod-name { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .ov-mod-icon { font-size: 20px; flex-shrink: 0; }
+  .ov-tools-bar { margin-top: 36px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); }
+  .ov-tools-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .tools-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tool-chip { background: var(--accent-xlight); border: 1px solid var(--border-strong); border-radius: 8px; padding: 4px 12px; font-size: 11px; font-weight: 600; color: var(--accent3); font-family: 'Montserrat', sans-serif; }
+
+  .tracks-wrap { position: relative; z-index: 1; background: #fff; }
+  .track-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 20px; }
+  .track-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: 18px; padding: 36px; position: relative; overflow: hidden; transition: transform 0.28s, box-shadow 0.28s; box-shadow: var(--shadow); }
+  .track-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(37,99,235,0.13); }
+  .track-card.track-a { border-top: 3px solid var(--accent); }
+  .track-card.track-b { border-top: 3px solid var(--accent2); }
+  .track-card-icon { font-size: 38px; margin-bottom: 18px; }
+  .track-card-label { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); margin-bottom: 6px; font-weight: 600; }
+  .track-card-title { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 10px; color: var(--text); letter-spacing: -0.01em; }
+  .track-card-title.blue { color: var(--accent); }
+  .track-card-title.purple { color: var(--accent2); }
+  .track-card-meta { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.7; }
+  .meta-chip { display: inline-flex; align-items: center; gap: 6px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 12px; margin: 3px; font-weight: 500; color: var(--muted); }
+
+  .roadmap-wrap { position: relative; z-index: 1; background-image: linear-gradient(rgba(37,99,235,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.055) 1px, transparent 1px); background-size: 48px 48px; background-color: var(--bg); }
+  .roadmap-flow { margin-top: 20px; position: relative; }
+  .rf-row { display: flex; gap: 0; align-items: stretch; margin-bottom: 0; }
+  .rf-spine { display: flex; flex-direction: column; align-items: center; width: 48px; flex-shrink: 0; padding-top: 18px; }
+  .rf-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 8px rgba(37,99,235,0.45); flex-shrink: 0; z-index: 1; }
+  .rf-dot-last { background: var(--accent2); box-shadow: 0 0 10px rgba(124,58,237,0.5); }
+  .rf-line { width: 2px; flex: 1; background: linear-gradient(to bottom, rgba(37,99,235,0.35), rgba(37,99,235,0.12)); min-height: 32px; }
+  .rf-card { flex: 1; margin-left: 20px; margin-bottom: 18px; }
+  .rf-card-inner { display: flex; gap: 18px; align-items: flex-start; background: var(--surface); border: 1.5px solid var(--border); border-left: 3px solid var(--accent); border-radius: 14px; padding: 22px 26px; transition: all 0.25s; box-shadow: var(--shadow); }
+  .rf-card-inner:hover { border-color: var(--border-strong); transform: translateX(4px); box-shadow: -4px 0 18px rgba(37,99,235,0.09); }
+  .rf-card-inner.purple-left { border-left-color: var(--accent2); }
+  .rf-num { font-family: 'Montserrat', sans-serif; font-size: 10px; color: var(--accent); letter-spacing: 0.08em; background: var(--accent-xlight); border: 1px solid var(--border-strong); border-radius: 7px; padding: 5px 9px; text-align: center; white-space: nowrap; flex-shrink: 0; align-self: flex-start; margin-top: 2px; font-weight: 700; }
+  .rf-num.purple { color: var(--accent2); background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.28); }
+  .rf-title { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 5px; color: var(--text); letter-spacing: -0.01em; }
+  .rf-hrs { font-size: 12px; color: var(--muted2); font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .module-topics { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+  .topic-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 3px 12px; font-size: 11px; font-family: 'DM Sans', sans-serif; color: var(--muted); transition: all 0.18s; font-weight: 500; }
+  .topic-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-xlight); }
+  .tc-purple { border-color: rgba(124,58,237,0.25) !important; color: rgba(124,58,237,0.75) !important; }
+  .tc-purple:hover { border-color: var(--accent2) !important; color: var(--accent2) !important; background: rgba(124,58,237,0.06) !important; }
+  .module-tools { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tools-label { font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); margin-right: 4px; }
+  .tool-tag { background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.2); border-radius: 6px; padding: 2px 9px; font-size: 10px; font-weight: 600; color: var(--accent3); font-family: 'Montserrat', sans-serif; }
+
+  .highlights-wrap { position: relative; z-index: 1; background: #fff; }
+  .highlights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 20px; }
+  .hl-card { background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px; padding: 26px; transition: all 0.25s; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+  .hl-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0; background: linear-gradient(to top, rgba(37,99,235,0.04), transparent); transition: height 0.35s; }
+  .hl-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(37,99,235,0.09); }
+  .hl-card:hover::after { height: 100%; }
+  .hl-icon { font-size: 26px; margin-bottom: 12px; }
+  .hl-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 7px; color: var(--text); }
+  .hl-text { font-size: 13px; color: var(--muted); line-height: 1.68; }
+
+  .example-box { margin-top: 36px; background: var(--accent-xlight); border: 1.5px solid var(--border-strong); border-radius: 14px; padding: 28px 34px; display: flex; align-items: center; gap: 22px; }
+  .example-box .ex-icon { font-size: 44px; flex-shrink: 0; }
+  .example-box p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .example-box strong { color: var(--text); }
+
+  .dots-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .dot { position: absolute; width: 2px; height: 2px; background: var(--accent); border-radius: 50%; animation: floatUp linear infinite; opacity: 0.2; }
+  @keyframes floatUp { from { transform: translateY(0); opacity: 0.2; } to { transform: translateY(-100vh); opacity: 0; } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 36px; font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--muted2); border-top: 1px solid var(--border); background: var(--surface2); letter-spacing: 0.04em; font-weight: 500; }
+  footer span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="dots-bg" id="dotsContainer"></div>
+
+<nav>
+  <div class="nav-start">
+    <a href="index.html" class="nav-back" title="Back to KT Hub" aria-label="Back to home">←<span>Back to home</span></a>
+    <div class="nav-logo">☁️ Advanced Cloud Engineering &amp; DevOps</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#tracks">Batches</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#highlights">Highlights</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-badge">🚀 Advanced AI Cloud Engineering &amp; DevOps Program — 2026</div>
+  <h1 class="hero-title">Cloud Engineering<br/><span>&amp; DevOps</span></h1>
+  <p class="hero-sub">From Linux fundamentals to AIOps — a complete DevOps and cloud engineering program built for infrastructure engineers who deploy at scale in 2026.</p>
+  <div class="hero-cta">
+    <a href="#roadmap" class="btn btn-primary">🗺️ View Roadmap</a>
+    <a href="#tracks" class="btn btn-ghost">📋 Explore Batches</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">13</div><div class="stat-label">Core Modules</div></div>
+    <div class="stat"><div class="stat-num">35+</div><div class="stat-label">Industry Tools</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Batch Options</div></div>
+  </div>
+  <div class="track-row">
+    <div class="track-pill weekday">
+      <div><div class="track-num">6mo</div><div class="track-sub">Weekday</div></div>
+      <div class="track-lbl">📅 Mon – Thu Batch</div>
+    </div>
+    <div class="track-pill weekend">
+      <div><div class="track-num">9mo</div><div class="track-sub">Weekend</div></div>
+      <div class="track-lbl">🗓️ Sat &amp; Sun Batch</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="expected-wrap">
+  <section class="expected-section" id="expected">
+    <div class="section-tag fade-in">00 — THE 2026 REALITY CHECK</div>
+    <h2 class="section-title fade-in">What is Expected from a <span style="color:var(--accent)">DevOps Engineer in 2026?</span></h2>
+    <p class="section-desc fade-in">Cloud-native is the baseline. Here's what separates job-ready DevOps engineers from the rest.</p>
+    <div class="expected-grid fade-in">
+      <div class="expect-card">
+        <div class="expect-icon">☁️</div>
+        <div class="expect-title">Cloud-Native Infrastructure at Scale</div>
+        <div class="expect-desc">Modern DevOps engineers are expected to design, provision and manage cloud infrastructure — not just deploy apps. AWS expertise, IaC with Terraform, and multi-region architecture are table-stakes skills in 2026.</div>
+      </div>
+      <div class="expect-card must">
+        <div class="expect-icon">🐳</div>
+        <div class="expect-title">Containers &amp; Kubernetes are Non-Negotiable</div>
+        <div class="expect-desc">Docker and Kubernetes are no longer "advanced" — they are the standard. Every production team expects you to containerize, orchestrate, and manage workloads in K8s clusters. This is the hiring floor in 2026.</div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon">🔁</div>
+        <div class="expect-title">CI/CD and GitOps Drive Every Team</div>
+        <div class="expect-desc">Automated pipelines with Jenkins and GitHub Actions, combined with GitOps workflows using ArgoCD, are how modern engineering teams ship. Engineers who design and maintain these pipelines are in high demand.</div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon">🤖</div>
+        <div class="expect-title">AIOps is the Next Frontier</div>
+        <div class="expect-desc">AI is reshaping infrastructure management — from AI-assisted incident detection to automated remediation. DevOps engineers who can work with GitHub Copilot and leverage AIOps tooling will lead the next generation of infrastructure teams.</div>
+      </div>
+    </div>
+    <div class="expected-cta fade-in">
+      <div class="cta-icon">🎯</div>
+      <div>
+        <div class="cta-main">This Program Covers Every Layer</div>
+        <div class="cta-sub">Linux to Kubernetes, CI/CD to IaC, DevSecOps to AIOps — every critical DevOps domain is built into this 13-module curriculum.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<div class="overview-wrap">
+  <section id="overview">
+    <div class="section-tag fade-in">01 — CURRICULUM OVERVIEW</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Overview</span> 📋</h2>
+    <p class="section-desc fade-in">13 modules covering the entire DevOps stack — from OS fundamentals and Linux to GitOps, Observability, DevSecOps, and AI for DevOps Engineering.</p>
+
+    <div class="overview-modules fade-in">
+      <div class="ov-mod-card"><div class="ov-mod-icon">🐧</div><div class="ov-mod-num">M01</div><div class="ov-mod-name">Linux &amp; Networking Foundations</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🌿</div><div class="ov-mod-num">M02</div><div class="ov-mod-name">Git &amp; Version Control</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">📜</div><div class="ov-mod-num">M03</div><div class="ov-mod-name">Programming &amp; Scripting</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">☁️</div><div class="ov-mod-num">M04</div><div class="ov-mod-name">Cloud Fundamentals (AWS)</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🐳</div><div class="ov-mod-num">M05</div><div class="ov-mod-name">Containers (Docker)</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">⎈</div><div class="ov-mod-num">M06</div><div class="ov-mod-name">Kubernetes &amp; Cloud Native</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🔁</div><div class="ov-mod-num">M07</div><div class="ov-mod-name">CI/CD Pipelines</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🏗️</div><div class="ov-mod-num">M08</div><div class="ov-mod-name">Infrastructure as Code</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">⚙️</div><div class="ov-mod-num">M09</div><div class="ov-mod-name">Configuration Management</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🔀</div><div class="ov-mod-num">M10</div><div class="ov-mod-name">GitOps</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">📊</div><div class="ov-mod-num">M11</div><div class="ov-mod-name">Observability</div></div>
+      <div class="ov-mod-card"><div class="ov-mod-icon">🔒</div><div class="ov-mod-num">M12</div><div class="ov-mod-name">DevSecOps</div></div>
+      <div class="ov-mod-card" style="border-color:rgba(124,58,237,0.3);">
+        <div class="ov-mod-icon">🤖</div>
+        <div class="ov-mod-num" style="color:var(--accent2);background:rgba(124,58,237,0.07);border-color:rgba(124,58,237,0.28);">M13</div>
+        <div class="ov-mod-name">AI for DevOps Engineering</div>
+      </div>
+    </div>
+
+    <div class="ov-tools-bar fade-in" style="margin-top:28px;">
+      <div class="ov-tools-label">🔧 Tools Covered Across the Program</div>
+      <div class="tools-chips">
+        <span class="tool-chip">Linux (Ubuntu)</span><span class="tool-chip">VirtualBox</span><span class="tool-chip">WSL</span><span class="tool-chip">SSH</span><span class="tool-chip">Git</span><span class="tool-chip">GitHub</span><span class="tool-chip">GitLab</span><span class="tool-chip">Bash</span><span class="tool-chip">Python</span><span class="tool-chip">AWS Console</span><span class="tool-chip">AWS CLI</span><span class="tool-chip">IAM</span><span class="tool-chip">EC2</span><span class="tool-chip">S3</span><span class="tool-chip">RDS</span><span class="tool-chip">DynamoDB</span><span class="tool-chip">Route53</span><span class="tool-chip">Lambda</span><span class="tool-chip">CloudWatch</span><span class="tool-chip">Docker Engine</span><span class="tool-chip">Docker Compose</span><span class="tool-chip">Kubernetes</span><span class="tool-chip">kubectl</span><span class="tool-chip">Minikube</span><span class="tool-chip">Amazon EKS</span><span class="tool-chip">Helm</span><span class="tool-chip">Jenkins</span><span class="tool-chip">GitHub Actions</span><span class="tool-chip">Terraform</span><span class="tool-chip">CloudFormation</span><span class="tool-chip">Ansible</span><span class="tool-chip">ArgoCD</span><span class="tool-chip">FluxCD</span><span class="tool-chip">Prometheus</span><span class="tool-chip">Grafana</span><span class="tool-chip">Loki</span><span class="tool-chip">OpenTelemetry</span><span class="tool-chip">SonarQube</span><span class="tool-chip">Trivy</span><span class="tool-chip">HashiCorp Vault</span><span class="tool-chip">GitHub Copilot</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<div class="tracks-wrap">
+  <section id="tracks">
+    <div class="section-tag fade-in">02 — LEARNING PATHS</div>
+    <h2 class="section-title fade-in">Choose Your <span style="color:var(--accent)">Batch</span> 🛤️</h2>
+    <p class="section-desc fade-in">Pick the schedule that fits your life — same curriculum, same 13 modules, same hands-on labs. Only the pace differs.</p>
+    <div class="track-cards fade-in">
+      <div class="track-card track-a">
+        <div class="track-card-icon">📅</div>
+        <div class="track-card-label">Weekday Batch</div>
+        <div class="track-card-title blue">Monday to Thursday</div>
+        <div class="track-card-meta">Best for full-time learners, freshers, and career-switchers who can commit weekday hours to accelerated, intensive DevOps and cloud training.</div>
+        <span class="meta-chip">📅 Mon – Thu</span>
+        <span class="meta-chip">⏱️ 6 Months</span>
+        <span class="meta-chip">🚀 Faster Pace</span>
+        <span class="meta-chip">🎯 13 Modules</span>
+      </div>
+      <div class="track-card track-b">
+        <div class="track-card-icon">🗓️</div>
+        <div class="track-card-label">Weekend Batch</div>
+        <div class="track-card-title purple">Saturday &amp; Sunday</div>
+        <div class="track-card-meta">Designed for working professionals and sysadmins upskilling into DevOps and cloud engineering without disrupting their current role.</div>
+        <span class="meta-chip">🗓️ Sat &amp; Sun</span>
+        <span class="meta-chip">⏱️ 9 Months</span>
+        <span class="meta-chip">🧘 Relaxed Pace</span>
+        <span class="meta-chip">🎯 13 Modules</span>
+      </div>
+    </div>
+    <div class="example-box fade-in">
+      <div class="ex-icon">💡</div>
+      <p>
+        <strong>Batch ≠ Content.</strong> Regardless of which batch you join — Weekday or Weekend — you go through all 13 modules identically. The program covers the full DevOps stack: <strong>Linux → Cloud → Containers → K8s → CI/CD → IaC → GitOps → Observability → DevSecOps → AIOps.</strong>
+      </p>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<div class="roadmap-wrap">
+  <section id="roadmap">
+    <div class="section-tag fade-in">03 — CURRICULUM</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Roadmap</span> 🗺️</h2>
+    <p class="section-desc fade-in">13 modules in a clear progression — build the foundation with Linux, Git and Cloud, layer on containers and orchestration, then master CI/CD, IaC, GitOps, Observability, Security, and AI.</p>
+
+    <div class="roadmap-flow">
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M01</div>
+          <div>
+            <div class="rf-title">🐧 Linux &amp; Networking Foundations</div>
+            <div class="rf-hrs">⏱ Foundation Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">OS Fundamentals</span><span class="topic-chip">Linux Distributions</span><span class="topic-chip">Linux File System</span><span class="topic-chip">Shell &amp; Commands</span><span class="topic-chip">Users, Groups &amp; Permissions</span><span class="topic-chip">Process Management</span><span class="topic-chip">Package Management</span><span class="topic-chip">System Monitoring &amp; Logs</span><span class="topic-chip">OSI Model &amp; TCP/IP</span><span class="topic-chip">IP Addressing &amp; Subnetting</span><span class="topic-chip">DNS Fundamentals</span><span class="topic-chip">Network Troubleshooting</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Linux (Ubuntu)</span><span class="tool-tag">VirtualBox / WSL</span><span class="tool-tag">SSH</span><span class="tool-tag">curl / wget</span><span class="tool-tag">ping</span><span class="tool-tag">traceroute</span><span class="tool-tag">netstat</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M02</div>
+          <div>
+            <div class="rf-title">🌿 Git &amp; Version Control</div>
+            <div class="rf-hrs">⏱ Foundation Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">VCS Concepts</span><span class="topic-chip">Git Fundamentals</span><span class="topic-chip">Repository Management</span><span class="topic-chip">Branching Strategies</span><span class="topic-chip">Collaboration Workflows</span><span class="topic-chip">Pull Requests &amp; Code Reviews</span><span class="topic-chip">Git History Management</span><span class="topic-chip">Workflow Strategies</span><span class="topic-chip">Secure Git Access</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Git</span><span class="tool-tag">GitHub</span><span class="tool-tag">GitLab</span><span class="tool-tag">SSH</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M03</div>
+          <div>
+            <div class="rf-title">📜 Programming &amp; Scripting</div>
+            <div class="rf-hrs">⏱ Automation Foundation Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Shell Scripting Fundamentals</span><span class="topic-chip">Script Execution &amp; Automation</span><span class="topic-chip">Environment Variables</span><span class="topic-chip">Conditional Statements</span><span class="topic-chip">Loops &amp; Functions</span><span class="topic-chip">Script Debugging</span><span class="topic-chip">API Interaction</span><span class="topic-chip">Python for DevOps Automation</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Bash</span><span class="tool-tag">Python</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M04</div>
+          <div>
+            <div class="rf-title">☁️ Cloud Fundamentals (AWS)</div>
+            <div class="rf-hrs">⏱ Cloud Core Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Cloud Computing Concepts</span><span class="topic-chip">AWS Global Infrastructure</span><span class="topic-chip">Identity &amp; Access Management</span><span class="topic-chip">Compute Services (EC2)</span><span class="topic-chip">Cloud Networking</span><span class="topic-chip">Storage Services (S3)</span><span class="topic-chip">Database Services (RDS, DynamoDB)</span><span class="topic-chip">DNS &amp; CloudFront</span><span class="topic-chip">Serverless (Lambda)</span><span class="topic-chip">CloudWatch Monitoring</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">AWS Console</span><span class="tool-tag">AWS CLI</span><span class="tool-tag">IAM</span><span class="tool-tag">EC2</span><span class="tool-tag">S3</span><span class="tool-tag">RDS</span><span class="tool-tag">DynamoDB</span><span class="tool-tag">Route53</span><span class="tool-tag">Lambda</span><span class="tool-tag">CloudWatch</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M05</div>
+          <div>
+            <div class="rf-title">🐳 Containers (Docker)</div>
+            <div class="rf-hrs">⏱ Containers Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Containerization Concepts</span><span class="topic-chip">Docker Architecture</span><span class="topic-chip">Docker Installation &amp; Setup</span><span class="topic-chip">Image Management</span><span class="topic-chip">Container Lifecycle</span><span class="topic-chip">Dockerfile Development</span><span class="topic-chip">Docker Networking</span><span class="topic-chip">Docker Storage</span><span class="topic-chip">Multi-Container Apps</span><span class="topic-chip">Container Security</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Docker Engine</span><span class="tool-tag">Docker CLI</span><span class="tool-tag">Dockerfile</span><span class="tool-tag">Docker Compose</span><span class="tool-tag">Docker Hub</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M06</div>
+          <div>
+            <div class="rf-title">⎈ Kubernetes &amp; Cloud Native</div>
+            <div class="rf-hrs">⏱ Orchestration Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Kubernetes Architecture</span><span class="topic-chip">Cluster Setup</span><span class="topic-chip">Pods, Deployments &amp; ReplicaSets</span><span class="topic-chip">Services &amp; Networking</span><span class="topic-chip">ConfigMaps &amp; Secrets</span><span class="topic-chip">Storage Management</span><span class="topic-chip">Auto Scaling</span><span class="topic-chip">Kubernetes Security</span><span class="topic-chip">Helm Package Management</span><span class="topic-chip">Deployment Strategies</span><span class="topic-chip">Managed K8s (Amazon EKS)</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Kubernetes</span><span class="tool-tag">kubectl</span><span class="tool-tag">Minikube</span><span class="tool-tag">Amazon EKS</span><span class="tool-tag">Helm</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M07</div>
+          <div>
+            <div class="rf-title">🔁 CI/CD Pipelines</div>
+            <div class="rf-hrs">⏱ Automation Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">CI/CD Fundamentals</span><span class="topic-chip">Build Automation</span><span class="topic-chip">Pipeline Design</span><span class="topic-chip">Pipeline Stages &amp; Workflows</span><span class="topic-chip">Artifact Management</span><span class="topic-chip">Container Build Pipelines</span><span class="topic-chip">Automated Testing Integration</span><span class="topic-chip">Deployment Automation</span><span class="topic-chip">Pipeline Security</span><span class="topic-chip">Pipeline Monitoring</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Jenkins</span><span class="tool-tag">GitHub Actions</span><span class="tool-tag">Docker</span><span class="tool-tag">Maven</span><span class="tool-tag">npm</span><span class="tool-tag">pip</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M08</div>
+          <div>
+            <div class="rf-title">🏗️ Infrastructure as Code</div>
+            <div class="rf-hrs">⏱ IaC Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">IaC Concepts</span><span class="topic-chip">Declarative Infrastructure</span><span class="topic-chip">Infrastructure Provisioning</span><span class="topic-chip">Terraform Architecture</span><span class="topic-chip">Terraform Configuration</span><span class="topic-chip">Terraform Modules</span><span class="topic-chip">State Management</span><span class="topic-chip">Infrastructure Automation</span><span class="topic-chip">Infrastructure Validation</span><span class="topic-chip">CloudFormation Templates</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Terraform</span><span class="tool-tag">AWS CloudFormation</span><span class="tool-tag">Terraform CLI</span><span class="tool-tag">Terraform Modules</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M09</div>
+          <div>
+            <div class="rf-title">⚙️ Configuration Management</div>
+            <div class="rf-hrs">⏱ Config Automation Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Config Management Concepts</span><span class="topic-chip">Infrastructure Automation</span><span class="topic-chip">Server Provisioning</span><span class="topic-chip">Inventory Management</span><span class="topic-chip">Task Automation</span><span class="topic-chip">Configuration Enforcement</span><span class="topic-chip">App Deployment Automation</span><span class="topic-chip">Cloud Infrastructure Config</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Ansible</span><span class="tool-tag">Ansible Playbooks</span><span class="tool-tag">Ansible Roles</span><span class="tool-tag">SSH</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M10</div>
+          <div>
+            <div class="rf-title">🔀 GitOps</div>
+            <div class="rf-hrs">⏱ GitOps Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">GitOps Principles</span><span class="topic-chip">Declarative Deployment Models</span><span class="topic-chip">Git-Driven Infrastructure</span><span class="topic-chip">Continuous Delivery with Git</span><span class="topic-chip">K8s App Deployment</span><span class="topic-chip">Deployment Reconciliation</span><span class="topic-chip">Automated Rollbacks</span><span class="topic-chip">Environment Management</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">ArgoCD</span><span class="tool-tag">FluxCD</span><span class="tool-tag">GitHub / GitLab</span><span class="tool-tag">Kubernetes</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M11</div>
+          <div>
+            <div class="rf-title">📊 Observability</div>
+            <div class="rf-hrs">⏱ Monitoring &amp; Logging Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">Observability Fundamentals</span><span class="topic-chip">Metrics Monitoring</span><span class="topic-chip">Log Aggregation</span><span class="topic-chip">Distributed Tracing</span><span class="topic-chip">Application Monitoring</span><span class="topic-chip">Infrastructure Monitoring</span><span class="topic-chip">Dashboard Visualization</span><span class="topic-chip">Alerting &amp; Notifications</span><span class="topic-chip">Performance Monitoring</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">Prometheus</span><span class="tool-tag">Grafana</span><span class="tool-tag">Loki</span><span class="tool-tag">OpenTelemetry</span><span class="tool-tag">Alertmanager</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card"><div class="rf-card-inner">
+          <div class="rf-num">M12</div>
+          <div>
+            <div class="rf-title">🔒 DevSecOps</div>
+            <div class="rf-hrs">⏱ Security Module</div>
+            <div class="module-topics">
+              <span class="topic-chip">DevSecOps Principles</span><span class="topic-chip">Security in CI/CD</span><span class="topic-chip">Static Code Analysis</span><span class="topic-chip">Dependency Vulnerability Scanning</span><span class="topic-chip">Container Image Security</span><span class="topic-chip">Secrets Management</span><span class="topic-chip">Kubernetes Security</span><span class="topic-chip">Infrastructure Security</span><span class="topic-chip">Compliance Monitoring</span>
+            </div>
+            <div class="module-tools"><span class="tools-label">Tools</span><span class="tool-tag">SonarQube</span><span class="tool-tag">Snyk</span><span class="tool-tag">Trivy</span><span class="tool-tag">OWASP Tools</span><span class="tool-tag">HashiCorp Vault</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot rf-dot-last"></div></div>
+        <div class="rf-card"><div class="rf-card-inner purple-left">
+          <div class="rf-num purple">M13</div>
+          <div>
+            <div class="rf-title">🤖 AI for DevOps Engineering</div>
+            <div class="rf-hrs">⏱ AI Integration Module · <span style="color:var(--accent2);font-weight:700;">Advanced Capstone</span></div>
+            <div class="module-topics">
+              <span class="topic-chip tc-purple">AI Foundations for DevOps</span><span class="topic-chip tc-purple">AI-Assisted Infrastructure</span><span class="topic-chip tc-purple">AI in CI/CD Pipelines</span><span class="topic-chip tc-purple">AI in Deployment Workflows</span><span class="topic-chip tc-purple">AIOps Fundamentals</span><span class="topic-chip tc-purple">AI Observability</span><span class="topic-chip tc-purple">AI in DevSecOps</span><span class="topic-chip tc-purple">AI in Cloud Engineering</span>
+            </div>
+            <div class="module-tools">
+              <span class="tools-label">Tools</span>
+              <span class="tool-tag" style="color:var(--accent2);border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.06);">ChatGPT</span>
+              <span class="tool-tag" style="color:var(--accent2);border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.06);">Claude</span>
+              <span class="tool-tag" style="color:var(--accent2);border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.06);">GitHub Copilot</span>
+              <span class="tool-tag" style="color:var(--accent2);border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.06);">Loki</span>
+              <span class="tool-tag" style="color:var(--accent2);border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.06);">Trivy</span>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<div class="highlights-wrap">
+  <section id="highlights">
+    <div class="section-tag fade-in">04 — COURSE DETAILS</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Highlights</span> ✨</h2>
+    <p class="section-desc fade-in">Everything packed into this program to make you a job-ready cloud and DevOps engineer.</p>
+    <div class="highlights-grid fade-in">
+      <div class="hl-card"><div class="hl-icon">📅</div><div class="hl-title">Flexible Batches</div><div class="hl-text"><strong style="color:var(--accent)">Weekday (Mon–Thu): 6 months</strong> · <strong style="color:var(--accent2)">Weekend (Sat–Sun): 9 months</strong>. Same 13-module curriculum — just different paces.</div></div>
+      <div class="hl-card"><div class="hl-icon">📚</div><div class="hl-title">13 Core Modules</div><div class="hl-text">Linux → Git → Scripting → AWS → Docker → K8s → CI/CD → IaC → Config Mgmt → GitOps → Observability → DevSecOps → AIOps. A complete arc from zero to cloud-native engineer.</div></div>
+      <div class="hl-card"><div class="hl-icon">☁️</div><div class="hl-title">Deep AWS Coverage</div><div class="hl-text">EC2, S3, IAM, RDS, DynamoDB, Lambda, Route53, CloudFront and CloudWatch — the full AWS stack for production cloud deployments.</div></div>
+      <div class="hl-card"><div class="hl-icon">⎈</div><div class="hl-title">Kubernetes Mastery</div><div class="hl-text">From local Minikube clusters to managed Amazon EKS — cluster setup, networking, Helm, scaling and Kubernetes security all covered in depth.</div></div>
+      <div class="hl-card"><div class="hl-icon">🏗️</div><div class="hl-title">Infrastructure as Code</div><div class="hl-text">Terraform and AWS CloudFormation from first principles — provisioning, modules, state management and infrastructure validation in real environments.</div></div>
+      <div class="hl-card"><div class="hl-icon">🔒</div><div class="hl-title">DevSecOps Built-In</div><div class="hl-text">Security scanning, secrets management with Vault, container image security with Trivy and SAST with SonarQube — shift-left security across the pipeline.</div></div>
+      <div class="hl-card"><div class="hl-icon">📊</div><div class="hl-title">Full Observability Stack</div><div class="hl-text">Prometheus for metrics, Grafana for dashboards, Loki for logs and OpenTelemetry for distributed tracing — complete end-to-end observability.</div></div>
+      <div class="hl-card"><div class="hl-icon">🤖</div><div class="hl-title">AI for DevOps (M13)</div><div class="hl-text">AIOps fundamentals, AI-assisted infrastructure, AI in CI/CD and GitHub Copilot for DevOps workflows — the advanced capstone of the program.</div></div>
+      <div class="hl-card"><div class="hl-icon">🔧</div><div class="hl-title">35+ Industry Tools</div><div class="hl-text">Hands-on with the exact tools used in production: Git, Docker, Kubernetes, Terraform, Ansible, ArgoCD, Jenkins, GitHub Actions, Prometheus, Grafana and more.</div></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  Built from <span>Advanced AI Cloud Engineering &amp; DevOps Program — 2026</span> · Powered by infrastructure &amp; ☁️
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('progress');
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    el.style.width = pct + '%';
+  });
+  const container = document.getElementById('dotsContainer');
+  for (let i = 0; i < 20; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.style.left = Math.random() * 100 + 'vw';
+    dot.style.bottom = '-10px';
+    dot.style.animationDuration = (12 + Math.random() * 20) + 's';
+    dot.style.animationDelay = (Math.random() * 14) + 's';
+    container.appendChild(dot);
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
