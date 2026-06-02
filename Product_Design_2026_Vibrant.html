@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Design 2026 · Sales KT</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F8F7F2;
+    --surface: rgba(255,255,255,0.85);
+    --surface-2: rgba(255,255,255,0.6);
+    --border: rgba(18,18,18,0.10);
+    --border-2: rgba(18,18,18,0.18);
+    --text: #0D0D0D;
+    --text-dim: rgba(13,13,13,0.68);
+    --text-faint: rgba(13,13,13,0.42);
+
+    /* Vibrant accent palette */
+    --emerald: #00C875;
+    --emerald-dark: #007A46;
+    --violet: #7C3AED;
+    --violet-light: #A78BFA;
+    --cyan: #0EA5E9;
+    --amber: #F59E0B;
+    --amber-dark: #92400E;
+    --rose: #F43F5E;
+    --indigo: #4F46E5;
+    --orange: #F97316;
+
+    /* Gradients */
+    --grad-hero: linear-gradient(135deg, #0D0D0D 0%, #1a1a2e 100%);
+    --grad-emerald: linear-gradient(135deg, #00C875, #007A46);
+    --grad-violet: linear-gradient(135deg, #7C3AED, #4F46E5);
+    --grad-amber: linear-gradient(135deg, #F59E0B, #F97316);
+
+    --font-display: 'Manrope', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --font-body: 'DM Sans', sans-serif;
+    --max-w: 1100px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  /* ── SUBTLE PAPER TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: 0.6;
+  }
+
+  /* ── STICKY NAV ── */
+  #topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(248,247,242,0.93);
+    backdrop-filter: blur(24px);
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--grad-emerald);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    color: #fff; letter-spacing: 0.05em; flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(0,200,117,0.35);
+  }
+  .brand-label {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.15em; color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 6px; align-items: center; }
+  .nav-pill {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 5px 12px; border-radius: 100px;
+    color: var(--text-faint); cursor: pointer; border: none;
+    background: transparent; transition: all 0.2s; white-space: nowrap;
+    text-decoration: none; display: inline-block;
+  }
+  .nav-pill:hover { color: var(--text); background: rgba(0,200,117,0.12); }
+
+  /* ── SCROLL PROGRESS ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 200;
+    background: linear-gradient(90deg, #00C875, #7C3AED, #F59E0B);
+    width: 0%; transition: width 0.1s;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section {
+    position: relative; z-index: 1;
+    width: 100%; padding: 80px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .inner { max-width: var(--max-w); margin: 0 auto; }
+
+  /* ── SHARED TAGS ── */
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 6px 18px; border-radius: 100px;
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 24px; font-weight: 500;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(32px, 4.5vw, 58px);
+    line-height: 1.1; white-space: pre-line;
+    margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .section-sub {
+    font-family: var(--font-body);
+    font-size: 16px; color: var(--text-dim);
+    font-style: normal; margin-bottom: 48px;
+    letter-spacing: 0.01em; max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════
+     HERO  — dark cinematic
+  ══════════════════════════════ */
+  #hero {
+    min-height: 92vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 40px;
+    background: var(--grad-hero);
+    position: relative; overflow: hidden;
+  }
+  /* Coloured glow orbs */
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 55% 45% at 25% 65%, rgba(0,200,117,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 40% at 78% 30%, rgba(124,58,237,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 35% 30% at 55% 85%, rgba(245,158,11,0.14) 0%, transparent 55%);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(54px, 8.5vw, 108px);
+    font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+    background: linear-gradient(140deg, #FFFFFF 0%, #FFFFFF 45%, #00C875 75%, #A78BFA 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px; white-space: pre-line;
+  }
+  .hero-subtitle {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.16em; color: rgba(255,255,255,0.4);
+    margin-bottom: 64px; text-transform: uppercase;
+  }
+  .hero-stats {
+    display: flex; gap: 0; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px; overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    flex: 1 1 140px; padding: 36px 24px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    min-width: 120px;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-val {
+    font-size: 52px; font-weight: 800; color: #00C875;
+    font-family: var(--font-display); line-height: 1;
+    margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .hero-stat-lbl {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.14em; color: rgba(255,255,255,0.38);
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════
+     STATS GRID
+  ══════════════════════════════ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px; margin-bottom: 32px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px; padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .stat-card:hover {
+    border-color: rgba(0,200,117,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,200,117,0.12);
+  }
+  .stat-val {
+    font-size: 54px; font-weight: 800;
+    font-family: var(--font-display); line-height: 1;
+    margin-bottom: 14px; letter-spacing: -0.02em;
+  }
+  .stat-lbl {
+    font-family: var(--font-body); font-size: 15px;
+    color: var(--text-dim); line-height: 1.6;
+  }
+  .insight-box {
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(0,200,117,0.1), rgba(0,200,117,0.05));
+    border: 1.5px solid rgba(0,200,117,0.3);
+    border-radius: 14px; font-size: 15.5px;
+    font-family: var(--font-body);
+    line-height: 1.75; color: var(--text-dim);
+  }
+
+  /* ══════════════════════════════
+     COMPARISON
+  ══════════════════════════════ */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .compare-col {
+    border-radius: 18px; padding: 32px 28px;
+  }
+  .compare-col.left {
+    background: #fff; border: 1px solid var(--border);
+  }
+  .compare-col.right {
+    background: linear-gradient(145deg, #0D1F15, #1a3828);
+    border: 1.5px solid rgba(0,200,117,0.3);
+    box-shadow: 0 4px 32px rgba(0,200,117,0.12);
+  }
+  .compare-label {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .compare-label.left { color: var(--text-faint); }
+  .compare-label.right { color: #00C875; }
+  .compare-col.right .compare-row { color: rgba(255,255,255,0.82); }
+  .compare-row {
+    padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+    font-family: var(--font-body); font-size: 15px; display: flex; gap: 14px; align-items: flex-start;
+    line-height: 1.55;
+  }
+  .compare-col.right .compare-row { border-bottom-color: rgba(255,255,255,0.08); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-icon { flex-shrink: 0; margin-top: 2px; }
+  .compare-col.left .compare-icon { color: #F43F5E; }
+  .compare-col.right .compare-icon { color: #00C875; }
+  .compare-col.left .compare-row { opacity: 0.55; }
+
+  /* ══════════════════════════════
+     POSITIONING
+  ══════════════════════════════ */
+  .pos-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .pos-card {
+    border-radius: 18px; padding: 30px 26px; transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .pos-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.08); }
+  .pos-card.normal { background: #fff; border: 1px solid var(--border); }
+  .pos-card.highlight {
+    background: linear-gradient(140deg, #0D1F15, #12243c);
+    border: 1.5px solid rgba(0,200,117,0.35);
+    box-shadow: 0 4px 24px rgba(0,200,117,0.14);
+  }
+  .pos-icon { font-size: 30px; margin-bottom: 16px; }
+  .pos-title {
+    font-family: var(--font-display); font-size: 16px; font-weight: 700;
+    margin-bottom: 12px; line-height: 1.4;
+  }
+  .pos-card.highlight .pos-title { color: #fff; }
+  .pos-desc { font-family: var(--font-body); font-size: 14px; line-height: 1.78; color: var(--text-dim); }
+  .pos-card.highlight .pos-desc { color: rgba(255,255,255,0.7); }
+
+  /* ══════════════════════════════
+     OVERVIEW / JOURNEY
+  ══════════════════════════════ */
+  .mode-badges {
+    display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap;
+  }
+  .mode-badge {
+    padding: 18px 26px;
+    background: #fff;
+    border: 1.5px solid rgba(0,200,117,0.3);
+    border-radius: 14px; display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 2px 12px rgba(0,200,117,0.08);
+  }
+  .mode-icon { font-size: 24px; }
+  .mode-lbl {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.1em; color: var(--text-faint); text-transform: uppercase;
+  }
+  .mode-dur {
+    font-size: 22px; color: var(--emerald-dark);
+    font-family: var(--font-display); font-weight: 700;
+  }
+
+  .journey-track {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+  .journey-phase {
+    padding: 28px 20px;
+    border-right: 1px solid rgba(0,0,0,0.07);
+    transition: filter 0.2s; cursor: default;
+  }
+  .journey-phase:last-child { border-right: none; }
+  .journey-phase:hover { filter: brightness(1.05) saturate(1.3); }
+  .phase-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    margin-bottom: 16px;
+  }
+  .phase-num {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.1em; color: var(--text-faint);
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .phase-label { font-family: var(--font-display); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .phase-mods { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+
+  /* ══════════════════════════════
+     MODULE ROADMAP
+  ══════════════════════════════ */
+  .module-chip-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  }
+  .mod-chip {
+    display: inline-flex; align-items: center;
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 11px; font-family: var(--font-mono);
+    background: rgba(13,13,13,0.04);
+    border: 1px solid rgba(13,13,13,0.12);
+    color: var(--text-dim);
+    transition: all 0.18s; cursor: default;
+    letter-spacing: 0.03em;
+  }
+  .mod-chip:hover { background: rgba(13,13,13,0.08); color: var(--text); }
+
+  .rf-section-wrap { position: relative; z-index: 1; }
+  .rf-flow { margin-top: 20px; position: relative; }
+  .rf-row { display: flex; gap: 0; align-items: stretch; margin-bottom: 0; }
+  .rf-spine {
+    display: flex; flex-direction: column; align-items: center;
+    width: 48px; flex-shrink: 0; padding-top: 18px;
+  }
+  .rf-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2.5px solid var(--bg); flex-shrink: 0; z-index: 1;
+  }
+  .rf-line {
+    width: 2px; flex: 1; min-height: 32px;
+  }
+  .rf-card-wrap { flex: 1; margin-left: 20px; margin-bottom: 18px; }
+  .rf-card-box {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 26px;
+    transition: all 0.25s;
+    border-left-width: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .rf-card-box:hover {
+    box-shadow: 0 6px 28px rgba(0,0,0,0.09);
+    transform: translateX(5px);
+  }
+  .rf-mod-num {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em;
+    border-radius: 8px;
+    padding: 5px 10px; text-align: center;
+    white-space: nowrap; flex-shrink: 0;
+    align-self: flex-start; margin-top: 2px;
+    font-weight: 600; border: 1px solid;
+  }
+  .rf-mod-title {
+    font-family: var(--font-display); font-size: 17px;
+    font-weight: 700; margin-bottom: 4px; color: var(--text);
+  }
+  .rf-mod-hrs {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--text-faint); letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .rf-mod-outcome {
+    font-family: var(--font-body); font-size: 13.5px;
+    color: var(--text-dim); line-height: 1.68;
+    margin-bottom: 12px;
+  }
+
+  /* ══════════════════════════════
+     OBJECTIONS
+  ══════════════════════════════ */
+  .objections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  .obj-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 26px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .obj-card:hover {
+    border-color: rgba(0,200,117,0.4);
+    box-shadow: 0 6px 24px rgba(0,200,117,0.1);
+  }
+  .obj-type {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--amber-dark); margin-bottom: 12px; font-weight: 600;
+  }
+  .obj-q {
+    font-family: var(--font-display); font-size: 15px; font-weight: 700; line-height: 1.45;
+    margin-bottom: 14px; color: var(--text);
+  }
+  .obj-a {
+    font-family: var(--font-body); font-size: 14px; color: var(--text-dim); line-height: 1.75;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+
+  /* ══════════════════════════════
+     DIFFERENTIATORS
+  ══════════════════════════════ */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .diff-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 18px; padding: 34px 28px;
+    transition: all 0.22s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    position: relative; overflow: hidden;
+  }
+  .diff-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,200,117,0.06), transparent 60%);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .diff-card:hover {
+    border-color: rgba(0,200,117,0.45);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 36px rgba(0,200,117,0.13);
+  }
+  .diff-card:hover::before { opacity: 1; }
+  .diff-icon { font-size: 38px; margin-bottom: 18px; }
+  .diff-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .diff-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-dim); line-height: 1.75; }
+
+  /* ══════════════════════════════
+     SUMMARY
+  ══════════════════════════════ */
+  .recap-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 40px;
+  }
+  .recap-row {
+    padding: 18px 22px; background: #fff;
+    border: 1px solid var(--border); border-radius: 12px;
+    font-family: var(--font-body); font-size: 15px; display: flex; gap: 14px; align-items: center;
+    transition: all 0.18s; line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .recap-row:hover {
+    background: rgba(0,200,117,0.06);
+    border-color: rgba(0,200,117,0.35);
+    box-shadow: 0 4px 16px rgba(0,200,117,0.1);
+  }
+  .recap-bullet { color: var(--emerald); font-size: 18px; flex-shrink: 0; }
+  .closing-quote {
+    padding: 44px 52px;
+    background: var(--grad-hero);
+    border: none;
+    border-radius: 22px;
+    font-family: var(--font-display);
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-weight: 600; line-height: 1.65;
+    text-align: center; color: #fff;
+    position: relative; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  }
+  .closing-quote::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 55% at 30% 60%, rgba(0,200,117,0.18), transparent 60%),
+                radial-gradient(ellipse 45% 40% at 75% 35%, rgba(124,58,237,0.18), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  #footer {
+    padding: 32px 40px; text-align: center;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--text-faint); letter-spacing: 0.1em;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg);
+  }
+  .btn-top {
+    background: var(--grad-emerald);
+    border: none;
+    border-radius: 8px; padding: 9px 22px;
+    color: #fff; font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.1em;
+    cursor: pointer; transition: opacity 0.2s, transform 0.2s; text-transform: uppercase;
+    font-weight: 600; box-shadow: 0 2px 12px rgba(0,200,117,0.3);
+  }
+  .btn-top:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── SECTION RULE ── */
+  .section-rule {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 52px;
+  }
+  .section-rule-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* MODULE HEADER */
+  .module-header-row {
+    max-width: var(--max-w); margin: 0 auto 48px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .module-header-row .tag { margin-bottom: 0; }
+  .module-section-inner { max-width: var(--max-w); margin: 0 auto; }
+
+  /* MODULE LAYOUT (old full module sections) */
+  .module-section { padding: 72px 40px; }
+  .module-section:nth-child(odd) { background: rgba(0,200,117,0.025); }
+  .module-layout {
+    display: grid; grid-template-columns: 1fr 1.15fr;
+    gap: 56px; align-items: start;
+  }
+  .module-left { display: flex; flex-direction: column; }
+  .module-num-display {
+    font-size: clamp(72px, 10vw, 120px); font-weight: 300;
+    line-height: 1; font-family: var(--font-mono);
+    user-select: none; pointer-events: none;
+    margin-bottom: -10px; margin-left: -4px;
+  }
+  .module-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 800; margin-bottom: 20px; white-space: pre-line; line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .module-pitch {
+    font-family: var(--font-body); font-size: 16px; color: var(--text-dim); line-height: 1.78;
+    margin-bottom: 28px;
+  }
+  .project-box { border-radius: 14px; padding: 22px 24px; margin-bottom: 16px; }
+  .project-tag {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .project-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .project-desc { font-family: var(--font-body); font-size: 14px; color: var(--text-dim); line-height: 1.68; }
+  .sales-note-box {
+    background: rgba(0,200,117,0.05); border: 1px solid rgba(0,200,117,0.2);
+    border-radius: 10px; padding: 18px 20px;
+  }
+  .sales-note-tag {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.14em; color: var(--text-faint);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .sales-note-text { font-family: var(--font-body); font-size: 14px; color: var(--text-dim); line-height: 1.72; }
+  .module-right { display: flex; flex-direction: column; }
+  .topics-label {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.18em; color: var(--text-faint);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .topic-row {
+    padding: 16px 20px; margin-bottom: 8px;
+    background: rgba(0,200,117,0.04);
+    border: 1px solid rgba(0,200,117,0.14);
+    border-radius: 10px; font-family: var(--font-body); font-size: 14px; line-height: 1.55;
+    display: flex; gap: 14px; align-items: flex-start;
+    border-left-width: 3px; transition: background 0.15s;
+  }
+  .topic-row:hover { background: rgba(0,200,117,0.09); }
+  .topic-num {
+    font-family: var(--font-mono); font-size: 11px;
+    opacity: 0.55; margin-top: 1px; flex-shrink: 0; min-width: 24px;
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 900px) {
+    section { padding: 60px 24px; }
+    .module-section { padding: 60px 24px; }
+    #topbar { padding: 12px 24px; }
+    #footer { padding: 24px; }
+    .module-layout { grid-template-columns: 1fr; gap: 36px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .recap-grid { grid-template-columns: 1fr; }
+    .journey-track { grid-template-columns: 1fr 1fr; }
+    .hero-stats { flex-direction: column; }
+    .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .hero-stat:last-child { border-bottom: none; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .journey-track { grid-template-columns: 1fr; }
+    .objections-grid { grid-template-columns: 1fr; }
+    .diff-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: clamp(26px, 7vw, 40px); }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,200,117,0.35); border-radius: 3px; }
+
+  /* ── FADE-IN ANIMATION ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- STICKY NAV -->
+<header id="topbar">
+  <div class="brand">
+    <div class="brand-icon">PD</div>
+    <span class="brand-label">Product Design 2026 · Sales KT</span>
+  </div>
+  <!-- <nav class="nav-links">
+    <a class="nav-pill" href="#market">Opportunity</a>
+    <a class="nav-pill" href="#industry">Industry Demands</a>
+    <a class="nav-pill" href="#positioning">Why Product Design</a>
+    <a class="nav-pill" href="#overview">Overview</a>
+    <a class="nav-pill" href="#modules">Modules</a>
+    <a class="nav-pill" href="#differentiators">What Makes Us Unique</a>
+    <a class="nav-pill" href="#summary">Summary</a>
+  </nav> -->
+</header>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section id="hero" style="border-bottom: 1px solid var(--border)">
+  <div class="hero-inner fade-in">
+    <div class="tag" style="background:rgba(0,200,117,0.12);border:1.5px solid rgba(0,200,117,0.35);color:#007A46">🎨 Product Design 2026</div>
+    <h1 class="hero-title">Design That Ships </h1>
+    <p class="hero-subtitle" style="color:rgba(255,255,255,0.45)">Product Design 2026 · From Visual Craft to Live Products — A Complete Designer's Journey</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-lbl">Modules</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">150+</div><div class="hero-stat-lbl">Hours</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-lbl">Projects</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">1</div><div class="hero-stat-lbl">Live Product</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     OPPORTUNITY IN 2026
+══════════════════════════════ -->
+<section id="market" style="background:linear-gradient(180deg,#F8F7F2 0%,#f0faf5 100%)">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(0,200,117,0.12);border:1.5px solid rgba(0,200,117,0.35);color:#007A46">The Opportunity</div>
+    <h2 class="section-title">Product Design —<br>The Opportunity in 2026</h2>
+    <p class="section-sub">The creative economy is booming. Product Designers sit at its center.</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val" style="color:#007A46">#1</div><div class="stat-lbl">Most in-demand creative skill globally — LinkedIn Workforce Report 2025</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#007A46">₹8–25L</div><div class="stat-lbl">Average starting salary range for Product Designers in India (entry to mid-level)</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#007A46">3.5M+</div><div class="stat-lbl">Product Design job openings projected worldwide by 2027</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#007A46">AI ≠</div><div class="stat-lbl">Replacement. AI needs designers to give it direction, taste, and intent.</div></div>
+      <div class="stat-card" style="border-top:3px solid #F43F5E"><div class="stat-val" style="color:#E11D48">72%</div><div class="stat-lbl">Of product teams increased their design headcount in the last 12 months</div></div>
+      <div class="stat-card" style="border-top:3px solid #F97316"><div class="stat-val" style="color:#EA580C">Every</div><div class="stat-lbl">App, SaaS product, AI tool, and fintech platform needs a Product Designer — always</div></div>
+    </div>
+    <div class="insight-box" style="font-weight:500">💡 India is producing millions of engineers — but barely enough designers. The gap between supply and demand makes this the best time in a decade to enter Product Design.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     WHAT INDUSTRY DEMANDS
+══════════════════════════════ -->
+<section id="industry" style="background:linear-gradient(180deg,#f0faf5 0%,#F8F7F2 100%)">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(79,70,229,0.1);border:1.5px solid rgba(79,70,229,0.3);color:#4F46E5">Industry Reality</div>
+    <h2 class="section-title">What Industry Demands<br>from Product Designers</h2>
+    <p class="section-sub">Hiring managers aren't looking for Figma operators. Here's what they actually want.</p>
+    <div class="pos-grid">
+      <div class="pos-card normal">
+        <div class="pos-icon">🧠</div>
+        <div class="pos-title">Design Thinking, Not Just Tool Proficiency</div>
+        <div class="pos-desc">Companies want designers who can frame problems, run user research, synthesize insights, and make decisions — not just someone who can drag and drop in Figma.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">📊</div>
+        <div class="pos-title">Business Awareness & Product Sense</div>
+        <div class="pos-desc">Designers who understand revenue models, product-market fit, and user metrics get promoted faster. Interviewers now ask "How does this design decision affect the business?"</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">🤖</div>
+        <div class="pos-title">AI-Augmented Workflow</div>
+        <div class="pos-desc">Every top design team is adopting AI for research synthesis, UX writing, and rapid prototyping. Candidates who walk in AI-native have a clear edge over those who don't.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">🏗️</div>
+        <div class="pos-title">Design Systems Ownership</div>
+        <div class="pos-desc">Being able to build, document, and maintain a scalable design system is now a baseline expectation at product companies — not a bonus skill.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">🤝</div>
+        <div class="pos-title">Cross-Functional Collaboration</div>
+        <div class="pos-desc">Product Designers don't work in isolation. Industry expects fluent communication with engineers, PMs, and stakeholders — handoffs, annotations, and design reviews.</div>
+      </div>
+      <div class="pos-card highlight">
+        <div class="pos-icon">🎯</div>
+        <div class="pos-title">Portfolio That Proves Outcomes</div>
+        <div class="pos-desc">Hiring managers skim hundreds of portfolios. What stops them: a case study that shows process, a live product link, and measurable impact. Not just pretty screens.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     POSITIONING
+══════════════════════════════ -->
+<section id="positioning" style="background:#F8F7F2">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.35);color:#92400E">Our Positioning</div>
+    <h2 class="section-title">Why We Call It<br>Product Design.</h2>
+    <p class="section-sub">The industry has moved. The job title has changed. We're simply being accurate.</p>
+    <div class="pos-grid">
+      <div class="pos-card normal">
+        <div class="pos-icon">🎯</div>
+        <div class="pos-title">UX/UI is a subset. Product Design is the full picture.</div>
+        <div class="pos-desc">UX/UI describes two skills. Product Design describes a role — one that owns research, systems, business thinking, and shipping. That's what companies hire for in 2026.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">📋</div>
+        <div class="pos-title">Job titles have already shifted.</div>
+        <div class="pos-desc">Look at any top startup's job board — it says 'Product Designer', not 'UX/UI Designer'. We named the course what the market actually calls the job.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">🏆</div>
+        <div class="pos-title">We're the first to make this move in this space.</div>
+        <div class="pos-desc">While every other institute races to say 'UX/UI + AI', we've reframed the entire category. That's a positioning advantage, not just a course name.</div>
+      </div>
+      <div class="pos-card normal">
+        <div class="pos-icon">🚀</div>
+        <div class="pos-title">Product Design = Higher Salaries.</div>
+        <div class="pos-desc">Roles titled 'Product Designer' command 20–40% higher compensation than equivalent UX/UI roles. The name reflects the scope — and the market pays for that scope.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     OVERVIEW
+══════════════════════════════ -->
+<section id="overview" style="background:linear-gradient(180deg,#F8F7F2 0%,#f5f3ff 100%)">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(0,104,74,0.12);border:1px solid rgba(0,104,74,0.3);color:#00684A">The Big Picture</div>
+    <h2 class="section-title">150+ Hours.<br>8 Modules.<br>1 Career-Ready Designer.</h2>
+    <div class="mode-badges">
+      <div class="mode-badge">
+        <span class="mode-icon">⚡</span>
+        <div><div class="mode-lbl">Weekday</div><div class="mode-dur">4 Months</div></div>
+      </div>
+      <div class="mode-badge">
+        <span class="mode-icon">🗓️</span>
+        <div><div class="mode-lbl">Weekend</div><div class="mode-dur">6 Months</div></div>
+      </div>
+    </div>
+    <div class="journey-track">
+      <div class="journey-phase" style="background:rgba(0,104,74,0.07)">
+        <div class="phase-dot" style="background:#FF6B35;box-shadow:0 0 10px #FF6B35"></div>
+        <div class="phase-num">Phase 1</div>
+        <div class="phase-label" style="color:#00684A">See & Think</div>
+        <div class="phase-mods">M1 + M2</div>
+      </div>
+      <div class="journey-phase" style="background:rgba(0,104,74,0.07)">
+        <div class="phase-dot" style="background:#7C3AED;box-shadow:0 0 10px #7C3AED"></div>
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-label" style="color:#00684A">Build & System</div>
+        <div class="phase-mods">M3 + M4</div>
+      </div>
+      <div class="journey-phase" style="background:rgba(0,104,74,0.07)">
+        <div class="phase-dot" style="background:#0EA5E9;box-shadow:0 0 10px #0EA5E9"></div>
+        <div class="phase-num">Phase 3</div>
+        <div class="phase-label" style="color:#0EA5E9">Strategy & Business</div>
+        <div class="phase-mods">M5</div>
+      </div>
+      <div class="journey-phase" style="background:rgba(0,104,74,0.07)">
+        <div class="phase-dot" style="background:#00ED64;box-shadow:0 0 10px #00ED64"></div>
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-label" style="color:#00ED64">Create & Present</div>
+        <div class="phase-mods">M6 + M7</div>
+      </div>
+      <div class="journey-phase" style="background:rgba(217,119,6,0.06)">
+        <div class="phase-dot" style="background:#F59E0B;box-shadow:0 0 10px #F59E0B"></div>
+        <div class="phase-num">Phase 5</div>
+        <div class="phase-label" style="color:#D97706">Ship Live</div>
+        <div class="phase-mods">M8</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     MODULES — ROADMAP STYLE
+══════════════════════════════ -->
+<section id="modules" style="background:rgba(0,104,74,0.025)">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(0,104,74,0.12);border:1px solid rgba(0,104,74,0.3);color:#00684A">03 — Curriculum</div>
+    <h2 class="section-title">Course Roadmap 🗺️</h2>
+    <p class="section-sub">8 modules in a clear progression — visual craft → UX thinking → design systems → AI → business → capstone → presentation → live launch.</p>
+
+    <div class="rf-flow">
+
+      <!-- M01 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#00684A;box-shadow:0 0 8px rgba(0,104,74,0.5)"></div>
+          <div class="rf-line"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#00684A">
+            <div class="rf-mod-num" style="color:#00684A;background:rgba(0,104,74,0.1);border-color:rgba(0,104,74,0.3)">M01</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🎨 Visual Design Mastery</div>
+              <div class="rf-mod-hrs">⏱ Foundations · All Learners</div>
+              <div class="rf-mod-outcome">Learn to see, analyse, and create — visual hierarchy, typography, color theory, and Figma from first principles.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Visual Hierarchy</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Typography Mastery</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Iconography</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Color Theory</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Figma Mastery</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Wireframing</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Prototyping</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Auto Layout & Variants</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(0,104,74,0.06);border:1px solid rgba(0,104,74,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#00684A;text-transform:uppercase;margin-bottom:5px">Project 1</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">30 Days × 30 Screens — a public Dribbble-style UI challenge proving consistency and creative output</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M02 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#00684A;box-shadow:0 0 8px rgba(0,104,74,0.5)"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(0,104,74,0.35),rgba(0,104,74,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#00684A">
+            <div class="rf-mod-num" style="color:#00684A;background:rgba(0,104,74,0.1);border-color:rgba(0,104,74,0.3)">M02</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🔍 Experience Design Mastery</div>
+              <div class="rf-mod-hrs">⏱ UX Research & Thinking · All Learners</div>
+              <div class="rf-mod-outcome">Turn visual skills into user-centred thinking. Research frameworks, information architecture, and behavioural design.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Double Diamond Framework</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Design Thinking</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">UX Research Methods</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Information Architecture</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">User Flows</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">UX Audits</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Behavioural Design</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Accessibility Standards</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(0,104,74,0.06);border:1px solid rgba(0,104,74,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#00684A;text-transform:uppercase;margin-bottom:5px">Project 2</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Usability Testing + UX Audit on a live app — the kind of work consultants charge lakhs for</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M03 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#00684A;box-shadow:0 0 8px rgba(0,104,74,0.5)"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(0,104,74,0.35),rgba(0,104,74,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#00684A">
+            <div class="rf-mod-num" style="color:#00684A;background:rgba(0,104,74,0.1);border-color:rgba(0,104,74,0.3)">M03</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🏗️ Design System Masterclass</div>
+              <div class="rf-mod-hrs">⏱ Systems & Scale · All Learners</div>
+              <div class="rf-mod-outcome">Build scalable, developer-ready design systems. The skill that separates junior designers from senior ones.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Atomic Design</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Color & Typography Systems</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Spacing Systems</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Design Tokens</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Variants & States</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Component Library</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Dev Handoff & Annotation</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(0,104,74,0.06);border:1px solid rgba(0,104,74,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#00684A;text-transform:uppercase;margin-bottom:5px">Project 3</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Build a complete Mini Design System for web and mobile — what Swiggy, Zepto, and PhonePe maintain daily</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M04 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#06B6D4;box-shadow:0 0 10px #06B6D460"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(6,182,212,0.35),rgba(0,104,74,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#06B6D4">
+            <div class="rf-mod-num" style="color:#06B6D4;background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.3)">M04</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🤖 AI for Designers</div>
+              <div class="rf-mod-hrs">⏱ AI-Native Workflow · All Learners</div>
+              <div class="rf-mod-outcome">An entire module no other course has. Designers who use AI effectively are 3× faster and far more valuable to teams.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">LLMs for Designers</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Prompt Engineering</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">AI UX Writing & Microcopy</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Research Synthesis with AI</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">AI Persona Analysis</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">AI-Assisted Ideation</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Midjourney & Design AI Tools</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(6,182,212,0.07);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#00684A;text-transform:uppercase;margin-bottom:5px">Project 4</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">AI-Optimised UX Report — audit a real product using AI tools and produce a structured improvement document</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M05 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#00ED64;box-shadow:0 0 8px rgba(0,237,100,0.4)"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(0,104,74,0.35),rgba(245,158,11,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#00ED64">
+            <div class="rf-mod-num" style="color:#00ED64;background:rgba(0,104,74,0.1);border-color:rgba(0,104,74,0.3)">M05</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">💼 Design vs Business</div>
+              <div class="rf-mod-hrs">⏱ Product Strategy · All Learners</div>
+              <div class="rf-mod-outcome">Understand why businesses pay designers. Revenue models, product-market fit, and the business logic behind every design decision.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Revenue Models Decoded</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Product Positioning</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Product Market Fit</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Revenue vs Design Trade-offs</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Stakeholder Communication</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#00684A">Competitive Analysis</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(0,104,74,0.06);border:1px solid rgba(0,104,74,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#00684A;text-transform:uppercase;margin-bottom:5px">Project 5</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Business-Oriented Product Document — strategy + revenue model field study that impresses non-designers too</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M06 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#D97706;box-shadow:0 0 8px rgba(217,119,6,0.4)"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(245,158,11,0.35),rgba(239,68,68,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#D97706">
+            <div class="rf-mod-num" style="color:#92610B;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3)">M06</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">⚡ Let's Design a Product</div>
+              <div class="rf-mod-hrs">⏱ Capstone Project · All Learners</div>
+              <div class="rf-mod-outcome">Everything from M01–M05 comes together. The signature portfolio piece — full end-to-end product design from zero to case study.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Problem Definition</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Applied User Research</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Data Synthesis</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Solution Ideation</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Design Systems Applied</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Visual Screens & Prototypes</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Usability Testing</span>
+                <span class="mod-chip" style="border-color:rgba(245,158,11,0.35);color:#92610B">Case Study Writing</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#92610B;text-transform:uppercase;margin-bottom:5px">Project 6</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Industry-Level Product + Case Study — research, screens, prototypes, and a complete document that gets interviews</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M07 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#EF4444;box-shadow:0 0 10px #EF444460"></div>
+          <div class="rf-line" style="background:linear-gradient(to bottom,rgba(239,68,68,0.35),rgba(2,52,48,0.25))"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#C12A2A">
+            <div class="rf-mod-num" style="color:#C12A2A;background:rgba(193,42,42,0.08);border-color:rgba(193,42,42,0.3)">M07</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🎤 Presentation & Storytelling</div>
+              <div class="rf-mod-hrs">⏱ Communication Skills · All Learners</div>
+              <div class="rf-mod-outcome">A brilliant design killed by a bad presentation is still a failure. This module teaches designers to command a room and defend their work.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(193,42,42,0.3);color:#C12A2A">Case Study Narrative Frameworks</span>
+                <span class="mod-chip" style="border-color:rgba(193,42,42,0.3);color:#C12A2A">Design Defense Techniques</span>
+                <span class="mod-chip" style="border-color:rgba(193,42,42,0.3);color:#C12A2A">Client Pitch Deck Creation</span>
+                <span class="mod-chip" style="border-color:rgba(193,42,42,0.3);color:#C12A2A">Voice & Confidence Training</span>
+                <span class="mod-chip" style="border-color:rgba(193,42,42,0.3);color:#C12A2A">Handling Tough Feedback</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(193,42,42,0.07);border:1px solid rgba(193,42,42,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#C12A2A;text-transform:uppercase;margin-bottom:5px">Project 7</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Mock Expert Panel Presentation — simulates actual interview and client presentation scenarios before graduation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M08 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine">
+          <div class="rf-dot" style="background:#023430;box-shadow:0 0 10px #02343060"></div>
+        </div>
+        <div class="rf-card-wrap">
+          <div class="rf-card-box" style="border-left-color:#00684A">
+            <div class="rf-mod-num" style="color:#023430;background:rgba(0,104,74,0.08);border-color:rgba(0,104,74,0.3)">M08</div>
+            <div style="flex:1">
+              <div class="rf-mod-title">🚀 Build & Ship a Live Product</div>
+              <div class="rf-mod-hrs">⏱ Live Deployment · All Learners</div>
+              <div class="rf-mod-outcome">The differentiator no other course offers. Students graduate with a real URL — a live, deployed product on the internet, not just a Figma file.</div>
+              <div class="module-chip-row">
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">Web App Essentials</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">Design to Product Mindset</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">No-Code with Framer</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">Lovable AI</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">API Basics for Designers</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">MVP Launch Strategy</span>
+                <span class="mod-chip" style="border-color:rgba(0,104,74,0.3);color:#023430">V1 Feedback Loop</span>
+              </div>
+              <div style="margin-top:14px;background:rgba(0,104,74,0.06);border:1px solid rgba(0,104,74,0.2);border-radius:8px;padding:12px 16px;">
+                <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.15em;color:#023430;text-transform:uppercase;margin-bottom:5px">Project 8 — Final</div>
+                <div style="font-family:var(--font-body);font-size:13px;color:var(--text-dim)">Live MVP Deployment — landing page + multi-page app deployed live. They graduate with a URL, not just a portfolio link.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     WHAT MAKES US UNIQUE
+══════════════════════════════ -->
+<section id="differentiators" style="background:linear-gradient(180deg,#F8F7F2 0%,#f0faf5 100%)">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(6,182,212,0.12);border:1.5px solid rgba(6,182,212,0.35);color:#0369A1">Our Edge</div>
+    <h2 class="section-title">What Makes<br>Us Unique.</h2>
+    <p class="section-sub">Five things no other Product Design course in this segment offers.</p>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🚀</div>
+        <div class="diff-title">Live Deployment</div>
+        <div class="diff-desc">Students graduate with a real URL — a live product on the internet. No other Product Design course in this segment offers this.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🤖</div>
+        <div class="diff-title">AI-Native Curriculum</div>
+        <div class="diff-desc">An entire module on AI for designers. Prompt engineering, AI research tools, AI-assisted UX writing — future-proofed from day one.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">💼</div>
+        <div class="diff-title">Business Module</div>
+        <div class="diff-desc">Module 5 teaches revenue models, product market fit, and design trade-offs. Students understand WHY decisions are made, not just how to execute them.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🏗️</div>
+        <div class="diff-title">Design Systems</div>
+        <div class="diff-desc">A full module on design systems — the skill that separates ₹6L/yr designers from ₹18L/yr ones. Most UX/UI bootcamps skip this entirely.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">📁</div>
+        <div class="diff-title">8 Real Projects</div>
+        <div class="diff-desc">One project per module. Not fake exercises — actual portfolio pieces including a usability test, a case study, a pitch deck, and a live MVP.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     SUMMARY
+══════════════════════════════ -->
+<section id="summary" style="background:#F8F7F2">
+  <div class="inner fade-in">
+    <div class="tag" style="background:rgba(0,200,117,0.12);border:1.5px solid rgba(0,200,117,0.35);color:#007A46">Summary</div>
+    <h2 class="section-title">The Full Picture.</h2>
+    <div class="recap-grid">
+      <div class="recap-row"><span class="recap-bullet">✦</span>Product Design is the most in-demand creative skill in 2026</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>Industry demands thinking, business sense, AI fluency — not just Figma</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>8 modules · 8 projects · 150+ hours of structured learning</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>Visual craft → UX → Design Systems → AI → Business → Capstone → Presentation → Live Launch</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>Students graduate with a portfolio, a case study, and a live URL</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>Weekday (5 months) or Weekend (7 months) mode available</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>No UX/UI course has: AI module + Business module + Live Deployment</div>
+      <div class="recap-row"><span class="recap-bullet">✦</span>We don't teach tools — we build Product Designers the industry actually hires</div>
+    </div>
+    <div class="closing-quote">"We are not selling just another design course. We are building the Product Designers that the industry in 2026 actually needs."</div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <span>Product Design 2026 · Sales KT</span>
+  <button class="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to Top</button>
+</footer>
+
+<script>
+  // Progress bar
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Intersection observer fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

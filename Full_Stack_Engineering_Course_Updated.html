@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>dsoftware & AI Engineering Course 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f8faf8;
+    --surface: #ffffff;
+    --surface2: #f0f7f1;
+    --accent: #16a34a;
+    --accent2: #059669;
+    --accent3: #065f46;
+    --accent-light: #bbf7d0;
+    --accent-xlight: #f0fdf4;
+    --text: #0f1f12;
+    --muted: #4b6e52;
+    --muted2: #6b9071;
+    --border: rgba(22,163,74,0.15);
+    --border-strong: rgba(22,163,74,0.3);
+    --glow: 0 0 40px rgba(22,163,74,0.12);
+    --shadow: 0 4px 24px rgba(15,31,18,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; z-index: 200;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #34d399);
+    transition: width 0.1s;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(22,163,74,0.35);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248,250,248,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO — has grid background ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+    background-image:
+      linear-gradient(rgba(22,163,74,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22,163,74,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: var(--bg);
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    animation: pulse 7s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .hero-orb-1 { width: 600px; height: 600px; background: rgba(22,163,74,0.09); top: -150px; left: -150px; }
+  .hero-orb-2 { width: 400px; height: 400px; background: rgba(5,150,105,0.07); bottom: 0; right: -100px; animation-delay: 3s; }
+  .hero-orb-3 { width: 300px; height: 300px; background: rgba(52,211,153,0.06); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 5s; }
+
+  @keyframes pulse {
+    from { transform: scale(1); opacity: 0.6; }
+    to   { transform: scale(1.15); opacity: 1; }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    padding: 7px 20px;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+    margin-bottom: 36px;
+    animation: fadeDown 0.8s ease both;
+    font-weight: 600;
+  }
+
+  .hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(46px, 7vw, 90px);
+    font-weight: 900;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    animation: fadeDown 0.8s ease 0.1s both;
+    color: var(--text);
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--accent), #22c55e, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    margin-top: 24px;
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.75;
+    animation: fadeDown 0.8s ease 0.2s both;
+    font-weight: 400;
+  }
+  .hero-cta {
+    margin-top: 44px;
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeDown 0.8s ease 0.3s both;
+  }
+  .btn {
+    padding: 13px 30px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.22s;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 18px rgba(22,163,74,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(22,163,74,0.4); background: #15803d; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.75);
+    color: var(--text);
+    border: 1.5px solid var(--border-strong);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); background: var(--accent-xlight); }
+
+  .hero-stats {
+    margin-top: 76px;
+    display: flex; gap: 56px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; font-weight: 500; }
+
+  .track-row { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; justify-content: center; animation: fadeUp 1s ease 0.6s both; }
+  .track-pill {
+    display: flex; align-items: center; gap: 14px;
+    border-radius: 14px;
+    padding: 14px 22px;
+    border: 1.5px solid;
+    background: rgba(255,255,255,0.7);
+  }
+  .track-pill.weekday { border-color: var(--border-strong); }
+  .track-pill.weekend { border-color: rgba(5,150,105,0.3); }
+  .track-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .track-pill.weekend .track-num { color: var(--accent2); }
+  .track-lbl { font-size: 13px; color: var(--muted); font-weight: 500; }
+  .track-sub { font-size: 11px; color: var(--muted2); }
+
+  /* ── SECTION COMMON ── */
+  section {
+    position: relative; z-index: 1;
+    padding: 96px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700;
+  }
+  .section-tag::before {
+    content: '';
+    display: block; width: 28px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 52px;
+    font-weight: 400;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    position: relative; z-index: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+    margin: 0 40px;
+  }
+
+  /* ── WHAT IS EXPECTED — plain white background ── */
+  .expected-wrap {
+    position: relative; z-index: 1;
+    background: #fff;
+  }
+  .expected-section {
+    position: relative; z-index: 1;
+    padding: 96px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .expected-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 44px;
+    margin-bottom: 36px;
+  }
+  .expect-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .expect-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), #34d399);
+  }
+  .expect-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--glow);
+    border-color: var(--border-strong);
+  }
+  .expect-icon { font-size: 28px; margin-bottom: 12px; }
+  .expect-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 9px;
+    line-height: 1.35;
+  }
+  .expect-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .expect-card.must {
+    border-color: rgba(22,163,74,0.28);
+    background: var(--accent-xlight);
+  }
+  .expect-card.must::before {
+    background: linear-gradient(90deg, var(--accent3), var(--accent));
+  }
+  .expected-cta {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    border-radius: 14px;
+    padding: 26px 38px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 28px rgba(22,163,74,0.22);
+  }
+  .expected-cta .cta-icon { font-size: 34px; flex-shrink: 0; }
+  .expected-cta .cta-main { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+  .expected-cta .cta-sub { font-size: 13px; font-weight: 400; opacity: 0.87; margin-top: 4px; }
+
+  /* ── OVERVIEW — grid background ── */
+  .overview-wrap {
+    position: relative; z-index: 1;
+    background-image:
+      linear-gradient(rgba(22,163,74,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22,163,74,0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: var(--bg);
+  }
+  .overview-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 20px;
+  }
+  .ov-track-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  .ov-track-header {
+    padding: 20px 26px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .ov-track-header.header-a { background: var(--accent-xlight); }
+  .ov-track-header.header-b { background: rgba(5,150,105,0.06); }
+  .ov-track-icon { font-size: 28px; }
+  .ov-track-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .ov-track-title.green { color: var(--accent); }
+  .ov-track-title.teal { color: var(--accent2); }
+  .ov-track-label {
+    font-size: 11px;
+    color: var(--muted2);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+  .ov-shared-header {
+    padding: 10px 26px;
+    background: rgba(6,95,70,0.05);
+    border-bottom: 1px solid var(--border);
+  }
+  .ov-shared-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent3);
+  }
+  .ov-row {
+    display: flex; align-items: center;
+    padding: 13px 26px;
+    border-bottom: 1px solid rgba(22,163,74,0.06);
+    gap: 12px;
+    transition: background 0.18s;
+  }
+  .ov-row:last-child { border-bottom: none; }
+  .ov-row:hover { background: var(--accent-xlight); }
+  .ov-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: var(--accent);
+    background: var(--accent-xlight);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 3px 7px;
+    white-space: nowrap;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ov-num.teal { color: var(--accent2); background: rgba(5,150,105,0.07); border-color: rgba(5,150,105,0.28); }
+  .ov-name { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+  .ov-hrs {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .ov-hrs.teal { color: var(--accent2); }
+  .ov-spec-row {
+    padding: 18px 26px;
+    background: linear-gradient(135deg, var(--accent-xlight), rgba(255,255,255,0.6));
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .ov-spec-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ov-spec-tag.green { color: var(--accent); }
+  .ov-spec-tag.teal { color: var(--accent2); }
+  .ov-spec-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 3px;
+    border: 1px solid;
+    color: var(--muted);
+    background: white;
+    border-color: var(--border);
+  }
+
+  /* track-badge */
+  .track-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+  .track-badge.a { background: rgba(22,163,74,0.1); border: 1px solid rgba(22,163,74,0.3); color: var(--accent); }
+  .track-badge.b { background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); color: var(--accent2); }
+  .track-badge.both { background: rgba(6,95,70,0.08); border: 1px solid rgba(6,95,70,0.2); color: var(--accent3); }
+
+  /* ── TRACKS SECTION — plain white ── */
+  .tracks-wrap {
+    position: relative; z-index: 1;
+    background: #fff;
+  }
+  .track-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 22px; margin-top: 20px;
+  }
+  .track-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+    position: relative; overflow: hidden;
+    transition: transform 0.28s, box-shadow 0.28s;
+    box-shadow: var(--shadow);
+  }
+  .track-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(22,163,74,0.13); }
+  .track-card.track-a { border-top: 3px solid var(--accent); }
+  .track-card.track-b { border-top: 3px solid var(--accent2); }
+  .track-card-icon { font-size: 38px; margin-bottom: 18px; }
+  .track-card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .track-card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px; font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .track-card-title.green { color: var(--accent); }
+  .track-card-title.teal { color: var(--accent2); }
+  .track-card-meta {
+    font-size: 14px; color: var(--muted);
+    margin-bottom: 20px; line-height: 1.7;
+  }
+  .meta-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 12px;
+    margin: 3px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  /* ── ROADMAP — grid background ── */
+  .roadmap-wrap {
+    position: relative; z-index: 1;
+    background-image:
+      linear-gradient(rgba(22,163,74,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22,163,74,0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: var(--bg);
+  }
+  .roadmap-flow { margin-top: 20px; position: relative; }
+  .rf-row { display: flex; gap: 0; align-items: stretch; margin-bottom: 0; }
+  .rf-spine {
+    display: flex; flex-direction: column; align-items: center;
+    width: 48px; flex-shrink: 0;
+    padding-top: 18px;
+  }
+  .rf-dot {
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 8px rgba(22,163,74,0.45);
+    flex-shrink: 0; z-index: 1;
+  }
+  .rf-dot-last { background: var(--accent2); box-shadow: 0 0 8px rgba(5,150,105,0.45); }
+  .rf-line {
+    width: 2px; flex: 1;
+    background: linear-gradient(to bottom, rgba(22,163,74,0.35), rgba(22,163,74,0.12));
+    min-height: 32px;
+  }
+  .rf-line-fork {
+    background: linear-gradient(to bottom, rgba(22,163,74,0.35), rgba(5,150,105,0.35));
+  }
+  .rf-card { flex: 1; margin-left: 20px; margin-bottom: 18px; }
+  .rf-card-inner {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 14px;
+    padding: 22px 26px;
+    transition: all 0.25s;
+    box-shadow: var(--shadow);
+  }
+  .rf-card-inner:hover {
+    border-color: var(--border-strong);
+    transform: translateX(4px);
+    box-shadow: -4px 0 18px rgba(22,163,74,0.09);
+  }
+  .rf-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    background: var(--accent-xlight);
+    border: 1px solid var(--border-strong);
+    border-radius: 7px;
+    padding: 5px 9px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+  .rf-num.purple { color: var(--accent2); background: rgba(5,150,105,0.08); border-color: rgba(5,150,105,0.28); }
+  .rf-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .rf-hrs {
+    font-size: 12px; color: var(--muted2);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+  }
+
+  /* ── FORK BLOCK ── */
+  .rf-fork-block { margin-left: 48px; margin-bottom: 18px; }
+  .rf-fork-label {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 14px;
+    padding-left: 20px;
+    font-weight: 700;
+  }
+  .rf-fork-icon { font-size: 15px; }
+  .rf-fork-cards {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: stretch;
+    padding-left: 20px;
+  }
+  .rf-fork-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    transition: all 0.25s;
+    box-shadow: var(--shadow);
+  }
+  .rf-fork-a { border-color: rgba(22,163,74,0.28); border-top: 3px solid var(--accent); }
+  .rf-fork-a:hover { box-shadow: 0 0 22px rgba(22,163,74,0.11); transform: translateY(-2px); }
+  .rf-fork-b { border-color: rgba(5,150,105,0.28); border-top: 3px solid var(--accent2); }
+  .rf-fork-b:hover { box-shadow: 0 0 22px rgba(5,150,105,0.13); transform: translateY(-2px); }
+  .rf-fork-card-top { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 4px; }
+  .rf-fork-vs {
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--muted2);
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    width: 38px; height: 38px;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  .tc-cyan { border-color: rgba(22,163,74,0.22) !important; color: rgba(22,163,74,0.75) !important; }
+  .tc-cyan:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-xlight) !important; }
+  .tc-purple { border-color: rgba(5,150,105,0.25) !important; color: rgba(5,150,105,0.75) !important; }
+  .tc-purple:hover { border-color: var(--accent2) !important; color: var(--accent2) !important; background: rgba(5,150,105,0.06) !important; }
+
+  /* ── MERGE BACK ── */
+  .rf-merge {
+    display: flex; align-items: center; gap: 14px;
+    margin: 8px 0 18px 68px;
+  }
+  .rf-merge-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(5,150,105,0.35), rgba(22,163,74,0.35));
+  }
+  .rf-merge-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    white-space: nowrap;
+    padding: 5px 13px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-weight: 600;
+  }
+
+  /* ── MODULE TOPICS ── */
+  .module-topics { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+  .topic-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    transition: all 0.18s;
+    font-weight: 500;
+  }
+  .topic-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-xlight); }
+
+  /* ── HIGHLIGHTS — plain white ── */
+  .highlights-wrap {
+    position: relative; z-index: 1;
+    background: #fff;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px; margin-top: 20px;
+  }
+  .hl-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    transition: all 0.25s;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .hl-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 0;
+    background: linear-gradient(to top, rgba(22,163,74,0.04), transparent);
+    transition: height 0.35s;
+  }
+  .hl-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: 0 8px 26px rgba(22,163,74,0.09); }
+  .hl-card:hover::after { height: 100%; }
+  .hl-icon { font-size: 26px; margin-bottom: 12px; }
+  .hl-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 7px; color: var(--text); }
+  .hl-text { font-size: 13px; color: var(--muted); line-height: 1.68; }
+
+  /* ── EXAMPLE BOX ── */
+  .example-box {
+    margin-top: 36px;
+    background: var(--accent-xlight);
+    border: 1.5px solid var(--border-strong);
+    border-radius: 14px;
+    padding: 28px 34px;
+    display: flex; align-items: center; gap: 22px;
+  }
+  .example-box .ex-icon { font-size: 44px; flex-shrink: 0; }
+  .example-box p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .example-box strong { color: var(--text); }
+
+  /* ── FLOATING DOTS ── */
+  .dots-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .dot {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0.2;
+  }
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 0.2; }
+    to   { transform: translateY(-100vh); opacity: 0; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: var(--muted2);
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+    background: var(--surface2);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  footer span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="dots-bg" id="dotsContainer"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">💻 Software & AI Engineering</div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#tracks">Batches</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#highlights">Highlights</a></li>
+  </ul>
+</nav>
+
+<!-- HERO — grid bg -->
+<div class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-badge">🎓 Software & AI Engineering Course — 2026</div>
+  <h1 class="hero-title">Software & AI<br/><span>Engineering</span></h1>
+  <p class="hero-sub">From Java basics to Generative AI — a complete engineering roadmap for developers who mean business in 2026.</p>
+  <div class="hero-cta">
+    <a href="#roadmap" class="btn btn-primary">🗺️ View Roadmap</a>
+    <a href="#tracks" class="btn btn-ghost">📋 Explore Tracks</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">7</div><div class="stat-label">Core Modules</div></div>
+    <div class="stat"><div class="stat-num">180</div><div class="stat-label">Total Hours</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">Tracks</div></div>
+  </div>
+  <div class="track-row">
+    <div class="track-pill weekday">
+      <div><div class="track-num">6mo</div><div class="track-sub">Weekday</div></div>
+      <div class="track-lbl">📅 Mon – Thu Batch</div>
+    </div>
+    <div class="track-pill weekend">
+      <div><div class="track-num">9mo</div><div class="track-sub">Weekend</div></div>
+      <div class="track-lbl">🗓️ Sat & Sun Batch</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT IS EXPECTED — plain white bg -->
+<div class="expected-wrap">
+  <section class="expected-section" id="expected">
+    <div class="section-tag fade-in">00 — THE 2026 REALITY CHECK</div>
+    <h2 class="section-title fade-in">What is Expected from a <span style="color:var(--accent)">Developer in 2026?</span></h2>
+    <p class="section-desc fade-in">The bar has been raised. Here's what separates job-ready engineers from the rest.</p>
+    <div class="expected-grid fade-in">
+      <div class="expect-card">
+        <div class="expect-icon">⚡</div>
+        <div class="expect-title">End-to-End Fast Pace Development or Deep Backend Specialization</div>
+        <div class="expect-desc">Either be aware of full-stack, end-to-end rapid product development — or go deep as a backend engineer specializing in system design, scalability, and architecture. Both paths are high-demand. Half-measures are not.</div>
+      </div>
+      <div class="expect-card must">
+        <div class="expect-icon">🧮</div>
+        <div class="expect-title">DSA is Not Optional — It's a Must</div>
+        <div class="expect-desc">Data Structures & Algorithms is the universal hiring gatekeeper in 2026. From startups to FAANG, every serious engineering role tests your problem-solving foundations. There are no shortcuts here.</div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon">🤖</div>
+        <div class="expect-title">Must be Able to Work with AI-Based Development Environments</div>
+        <div class="expect-desc">AI co-pilots are now standard tooling. Developers who can effectively leverage AI for code generation, debugging, and architecture decisions ship 10x faster. This is a core skill, not a bonus.</div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-icon">🐳</div>
+        <div class="expect-title">DevOps Understanding is an Added Advantage</div>
+        <div class="expect-desc">Knowing Docker, CI/CD pipelines, cloud deployments, and monitoring makes you a senior engineer in a junior role. Infrastructure awareness separates engineers who write code from those who ship products.</div>
+      </div>
+    </div>
+    <div class="expected-cta fade-in">
+      <div class="cta-icon">🎯</div>
+      <div>
+        <div class="cta-main">This Course Covers Everything</div>
+        <div class="cta-sub">All four pillars — end-to-end engineering, DSA mastery, AI-native development, and DevOps fundamentals — are built into this curriculum.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- OVERVIEW — grid bg, two track cols -->
+<div class="overview-wrap">
+  <section id="overview">
+    <div class="section-tag fade-in">01 — CURRICULUM OVERVIEW</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Overview</span> 📋</h2>
+    <p class="section-desc fade-in">7 modules spanning 180 hours — build your foundation through M01–M03, choose your specialization at M04, then master DevOps, GenAI & Interview Prep.</p>
+
+    <div class="overview-cols fade-in">
+      <!-- Fullstack Track Column -->
+      <div class="ov-track-card">
+        <div class="ov-track-header header-a">
+          <div class="ov-track-icon">🌐</div>
+          <div>
+            <div class="ov-track-title green">Fullstack Engineering</div>
+            <div class="ov-track-label">Track A — 60h Specialization</div>
+          </div>
+        </div>
+        <!-- Shared modules -->
+        <div class="ov-row">
+          <span class="ov-num">M01</span>
+          <span class="ov-name">Programming Foundations (Java)</span>
+          <span class="ov-hrs">30h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M02</span>
+          <span class="ov-name">Data Structures & Algorithms</span>
+          <span class="ov-hrs">45h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M03</span>
+          <span class="ov-name">Database — MySQL &amp; MongoDB</span>
+          <span class="ov-hrs">5h</span>
+        </div>
+        <!-- Specialization -->
+        <div class="ov-shared-header" style="background:var(--accent-xlight);"><div class="ov-shared-label" style="color:var(--accent);">Track A Specialization</div></div>
+        <div class="ov-row">
+          <span class="ov-num">M04A</span>
+          <span class="ov-name">Fullstack Engineering</span>
+          <span class="ov-hrs">60h</span>
+        </div>
+        <!-- Shared final -->
+        <div class="ov-row">
+          <span class="ov-num">M05</span>
+          <span class="ov-name">DevOps for Developers</span>
+          <span class="ov-hrs">15h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M06</span>
+          <span class="ov-name">Generative AI for Developers</span>
+          <span class="ov-hrs">15h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M07</span>
+          <span class="ov-name">Interview Preparation</span>
+          <span class="ov-hrs">10h</span>
+        </div>
+        <div class="ov-spec-row" style="flex-direction:column;align-items:flex-start;gap:10px;">
+          <div class="ov-spec-tag green">Learning Outcome</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Able to build end-to-end Full Stack products with AI integrations in the stack of <strong style="color:var(--accent)">React, NodeJS, MySQL &amp; MongoDB, Gen AI</strong></div>
+          <div><span class="ov-spec-chip">React Apps</span><span class="ov-spec-chip">Auth Systems</span><span class="ov-spec-chip">Full Stack Product</span></div>
+        </div>
+      </div>
+
+      <!-- Backend Track Column -->
+      <div class="ov-track-card">
+        <div class="ov-track-header header-b">
+          <div class="ov-track-icon">⚙️</div>
+          <div>
+            <div class="ov-track-title teal">Backend Engineering</div>
+            <div class="ov-track-label">Track B — 60h Specialization</div>
+          </div>
+        </div>
+        <!-- Shared modules -->
+        <div class="ov-row">
+          <span class="ov-num">M01</span>
+          <span class="ov-name">Programming Foundations (Java)</span>
+          <span class="ov-hrs">30h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M02</span>
+          <span class="ov-name">Data Structures & Algorithms</span>
+          <span class="ov-hrs">45h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M03</span>
+          <span class="ov-name">Database — MySQL &amp; MongoDB</span>
+          <span class="ov-hrs">5h</span>
+        </div>
+        <!-- Specialization -->
+        <div class="ov-shared-header" style="background:rgba(5,150,105,0.08);"><div class="ov-shared-label" style="color:var(--accent2);">Track B Specialization</div></div>
+        <div class="ov-row">
+          <span class="ov-num teal">M04B</span>
+          <span class="ov-name">Backend Engineering</span>
+          <span class="ov-hrs teal">60h</span>
+        </div>
+        <!-- Shared final -->
+        <div class="ov-row">
+          <span class="ov-num">M05</span>
+          <span class="ov-name">DevOps for Developers</span>
+          <span class="ov-hrs">15h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M06</span>
+          <span class="ov-name">Generative AI for Developers</span>
+          <span class="ov-hrs">15h</span>
+        </div>
+        <div class="ov-row">
+          <span class="ov-num">M07</span>
+          <span class="ov-name">Interview Preparation</span>
+          <span class="ov-hrs">10h</span>
+        </div>
+        <div class="ov-spec-row" style="background:linear-gradient(135deg,rgba(5,150,105,0.08),rgba(255,255,255,0.6));flex-direction:column;align-items:flex-start;gap:10px;">
+          <div class="ov-spec-tag teal">Learning Outcome</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;">Able to build production-level scalable backend projects with AI, with specialization in <strong style="color:var(--accent2)">Springboot, Advanced System Design &amp; SOLID Principles</strong></div>
+          <div><span class="ov-spec-chip">Microservices</span><span class="ov-spec-chip">System Design HLD/LLD</span><span class="ov-spec-chip">REST APIs</span><span class="ov-spec-chip">PostgreSQL</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- TRACKS — plain white bg -->
+<div class="tracks-wrap">
+  <section id="tracks">
+    <div class="section-tag fade-in">02 — LEARNING PATHS</div>
+    <h2 class="section-title fade-in">Choose Your <span style="color:var(--accent)">Batch</span> 🛤️</h2>
+    <p class="section-desc fade-in">Pick the schedule that fits your life — same 180-hour curriculum, same modules, same specialization options. Only the pace differs.</p>
+    <div class="track-cards fade-in">
+      <div class="track-card track-a">
+        <div class="track-card-icon">📅</div>
+        <div class="track-card-label">Weekday Batch</div>
+        <div class="track-card-title green">Monday to Thursday</div>
+        <div class="track-card-meta">Best for full-time learners, freshers, and career-switchers who can dedicate weekday hours to focused, accelerated learning.</div>
+        <span class="meta-chip">📅 Mon – Thu</span>
+        <span class="meta-chip">⏱️ 6 Months</span>
+        <span class="meta-chip">🕐 180 Hours</span>
+        <span class="meta-chip">🚀 Faster Pace</span>
+      </div>
+      <div class="track-card track-b">
+        <div class="track-card-icon">🗓️</div>
+        <div class="track-card-label">Weekend Batch</div>
+        <div class="track-card-title teal">Saturday & Sunday</div>
+        <div class="track-card-meta">Designed for working professionals who want to upskill without disrupting their current job. Learn at a comfortable pace over the weekend.</div>
+        <span class="meta-chip">🗓️ Sat & Sun</span>
+        <span class="meta-chip">⏱️ 9 Months</span>
+        <span class="meta-chip">🕐 180 Hours</span>
+        <span class="meta-chip">🧘 Relaxed Pace</span>
+      </div>
+    </div>
+    <div class="example-box fade-in">
+      <div class="ex-icon">💡</div>
+      <p>
+        <strong>Batch ≠ Specialization.</strong> Regardless of which batch you join — Weekday or Weekend — you go through the same 7 modules. At Module 4, every learner independently picks their specialization: <strong>Fullstack Engineering (4A)</strong> or <strong>Backend Engineering (4B)</strong>.
+      </p>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ROADMAP — grid bg -->
+<div class="roadmap-wrap">
+  <section id="roadmap">
+    <div class="section-tag fade-in">03 — CURRICULUM</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Roadmap</span> 🗺️</h2>
+    <p class="section-desc fade-in">7 modules in a clear progression — shared foundation, a specialization fork at Module 4, then back together for DevOps, GenAI & Interview Prep.</p>
+
+    <div class="roadmap-flow">
+      <!-- M01 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M01</div>
+            <div>
+              <div class="rf-title">☕ Programming Foundations (Java)</div>
+              <div class="rf-hrs">⏱ 30 Hours</div>
+              <div class="module-topics">
+                <span class="topic-chip">Java Basics</span><span class="topic-chip">Variables & Data Types</span><span class="topic-chip">Operators</span><span class="topic-chip">Control Statements</span><span class="topic-chip">Arrays & Strings</span><span class="topic-chip">Methods</span><span class="topic-chip">OOP Concepts</span><span class="topic-chip">Inheritance & Polymorphism</span><span class="topic-chip">Exception Handling</span><span class="topic-chip">Collections Framework</span><span class="topic-chip">File Handling</span><span class="topic-chip">Multithreading</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- M02 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M02</div>
+            <div>
+              <div class="rf-title">🧮 Data Structures & Algorithms</div>
+              <div class="rf-hrs">⏱ 45 Hours</div>
+              <div class="module-topics">
+                <span class="topic-chip">Complexity Analysis</span><span class="topic-chip">Arrays & Strings</span><span class="topic-chip">Linked List</span><span class="topic-chip">Stack & Queue</span><span class="topic-chip">Hashing</span><span class="topic-chip">Trees & BST</span><span class="topic-chip">Heaps</span><span class="topic-chip">Graphs (BFS/DFS)</span><span class="topic-chip">Recursion & Backtracking</span><span class="topic-chip">Sorting Algorithms</span><span class="topic-chip">Binary Search</span><span class="topic-chip">Dynamic Programming</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- M03 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line rf-line-fork"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M03</div>
+            <div>
+              <div class="rf-title">🗄️ Database — MySQL &amp; MongoDB</div>
+              <div class="rf-hrs">⏱ 5 Hours</div>
+              <div class="module-topics">
+                <span class="topic-chip">DBMS Fundamentals</span><span class="topic-chip">SELECT & WHERE</span><span class="topic-chip">INSERT / UPDATE / DELETE</span><span class="topic-chip">Joins</span><span class="topic-chip">Aggregate Functions</span><span class="topic-chip">Subqueries</span><span class="topic-chip">Indexing</span><span class="topic-chip">Transactions & ACID</span><span class="topic-chip">Normalization</span><span class="topic-chip">Stored Procedures</span><span class="topic-chip">Triggers</span><span class="topic-chip tc-cyan">MongoDB Basics</span><span class="topic-chip tc-cyan">Collections & Documents</span><span class="topic-chip tc-cyan">CRUD in MongoDB</span><span class="topic-chip tc-cyan">Aggregation Pipeline</span><span class="topic-chip tc-cyan">Indexing in MongoDB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- M04 FORK -->
+      <div class="rf-fork-block fade-in">
+        <div class="rf-fork-label"><span class="rf-fork-icon">🔀</span> Module 4 — Choose Your Specialization</div>
+        <div class="rf-fork-cards">
+          <div class="rf-fork-card rf-fork-a">
+            <div class="rf-fork-card-top">
+              <div class="rf-num">M04A</div>
+              <div><div class="rf-title">🌐 Fullstack Engineering</div><div class="rf-hrs">⏱ 60 Hours · Track A</div></div>
+            </div>
+            <div class="module-topics">
+              <span class="topic-chip tc-cyan">React & JSX</span><span class="topic-chip tc-cyan">Component Lifecycle</span><span class="topic-chip tc-cyan">Hooks (useState, useEffect)</span><span class="topic-chip tc-cyan">React Router</span><span class="topic-chip tc-cyan">Redux / Context API</span><span class="topic-chip tc-cyan">Axios & REST</span><span class="topic-chip tc-cyan">Spring Boot</span><span class="topic-chip tc-cyan">REST API Dev</span><span class="topic-chip tc-cyan">MySQL Integration</span><span class="topic-chip tc-cyan">JWT Auth</span><span class="topic-chip tc-cyan">System Design (HLD)</span><span class="topic-chip tc-cyan">Redis & Caching</span>
+            </div>
+          </div>
+          <div class="rf-fork-vs">or</div>
+          <div class="rf-fork-card rf-fork-b">
+            <div class="rf-fork-card-top">
+              <div class="rf-num purple">M04B</div>
+              <div><div class="rf-title">⚙️ Backend Engineering</div><div class="rf-hrs">⏱ 60 Hours · Track B</div></div>
+            </div>
+            <div class="module-topics">
+              <span class="topic-chip tc-purple">Spring Boot Deep Dive</span><span class="topic-chip tc-purple">REST API Dev</span><span class="topic-chip tc-purple">PostgreSQL</span><span class="topic-chip tc-purple">Hibernate & JPA</span><span class="topic-chip tc-purple">API Security</span><span class="topic-chip tc-purple">System Design HLD/LLD</span><span class="topic-chip tc-purple">Microservices</span><span class="topic-chip tc-purple">SOLID Principles</span><span class="topic-chip tc-purple">Unit Testing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MERGE BACK -->
+      <div class="rf-merge fade-in">
+        <div class="rf-merge-line"></div>
+        <div class="rf-merge-label">Modules 5 → 7 complete your journey</div>
+        <div class="rf-merge-line"></div>
+      </div>
+
+      <!-- M05 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M05</div>
+            <div>
+              <div class="rf-title">🐳 DevOps for Developers</div>
+              <div class="rf-hrs">⏱ 15 Hours</div>
+              <div class="module-topics">
+                <span class="topic-chip">AWS (EC2, S3, IAM)</span><span class="topic-chip">Docker Images & Containers</span><span class="topic-chip">Dockerfile</span><span class="topic-chip">Kubernetes Pods</span><span class="topic-chip">CI/CD Pipelines</span><span class="topic-chip">Git & GitHub Workflows</span><span class="topic-chip">Deployment & Hosting</span><span class="topic-chip">Monitoring & Logs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- M06 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot"></div><div class="rf-line"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M06</div>
+            <div>
+              <div class="rf-title">🤖 Generative AI for Developers</div>
+              <div class="rf-hrs">⏱ 15 Hours</div>
+              <div class="module-topics">
+                <span class="topic-chip">ML & NLP Basics</span><span class="topic-chip">LLM Concepts</span><span class="topic-chip">Tokens & Context Window</span><span class="topic-chip">Embeddings & Vectors</span><span class="topic-chip">RAG</span><span class="topic-chip">Prompt Engineering</span><span class="topic-chip">Few-shot Prompting</span><span class="topic-chip">OpenAI API</span><span class="topic-chip">Vector Databases</span><span class="topic-chip">AI Projects (Chatbot, Doc Q&A)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- M07 -->
+      <div class="rf-row fade-in">
+        <div class="rf-spine"><div class="rf-dot rf-dot-last"></div></div>
+        <div class="rf-card">
+          <div class="rf-card-inner">
+            <div class="rf-num">M07</div>
+            <div>
+              <div class="rf-title">🎯 Interview Preparation</div>
+              <div class="rf-hrs">⏱ 10 Hours · <span style="color:var(--accent);font-weight:700;">Dedicated Training</span></div>
+              <div class="module-topics">
+                <span class="topic-chip">DSA Revision</span><span class="topic-chip">OOP & DBMS Concepts</span><span class="topic-chip">OS & Networking Basics</span><span class="topic-chip">Resume Building</span><span class="topic-chip">GitHub Portfolio</span><span class="topic-chip">Mock Interviews</span><span class="topic-chip">System Design Rounds</span><span class="topic-chip">Behavioral Prep & HR</span><span class="topic-chip tc-cyan">1-on-1 Mock Sessions</span><span class="topic-chip tc-cyan">Live Interview Practice</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- HIGHLIGHTS — plain white bg -->
+<div class="highlights-wrap">
+  <section id="highlights">
+    <div class="section-tag fade-in">04 — COURSE DETAILS</div>
+    <h2 class="section-title fade-in">Course <span style="color:var(--accent)">Highlights</span> ✨</h2>
+    <p class="section-desc fade-in">Everything packed into this program to make you a job-ready software developer.</p>
+    <div class="highlights-grid fade-in">
+      <div class="hl-card"><div class="hl-icon">📅</div><div class="hl-title">Flexible Batches</div><div class="hl-text"><strong style="color:var(--accent)">Weekday (Mon–Thu): 6 months</strong> · <strong style="color:var(--accent2)">Weekend (Sat–Sun): 9 months</strong>. Same 180-hour curriculum, same specialization options — just different paces.</div></div>
+      <div class="hl-card"><div class="hl-icon">📚</div><div class="hl-title">7 Core Modules</div><div class="hl-text">Java → DSA → DB → Engineering Track → DevOps → GenAI → Interview Prep. A complete arc from zero to job-ready.</div></div>
+      <div class="hl-card"><div class="hl-icon">🔀</div><div class="hl-title">1 Specialization Choice</div><div class="hl-text">At Module 4, every learner picks either <strong>Fullstack (4A)</strong> or <strong>Backend (4B)</strong> — independent of which batch they're in.</div></div>
+      <div class="hl-card"><div class="hl-icon">🤖</div><div class="hl-title">Generative AI Module</div><div class="hl-text">Learn to build AI-powered apps — RAG pipelines, prompt engineering, and OpenAI API integration.</div></div>
+      <div class="hl-card"><div class="hl-icon">🧮</div><div class="hl-title">45hrs DSA Training</div><div class="hl-text">The most extensive module — covering arrays to dynamic programming. Built to crack FAANG-style coding rounds.</div></div>
+      <div class="hl-card"><div class="hl-icon">🎤</div><div class="hl-title">Dedicated Interview Prep Training</div><div class="hl-text">A dedicated module with 1-on-1 mock interviews, live practice sessions, resume building, GitHub portfolio, and behavioral prep — so you walk into interviews ready.</div></div>
+      <div class="hl-card"><div class="hl-icon">🐳</div><div class="hl-title">DevOps for Devs</div><div class="hl-text">Docker, Kubernetes, CI/CD, AWS — the infrastructure skills that differentiate senior engineers.</div></div>
+      <div class="hl-card"><div class="hl-icon">🏗️</div><div class="hl-title">System Design</div><div class="hl-text">Both tracks include system design — HLD, LLD, scalability patterns and Redis caching fundamentals.</div></div>
+      <div class="hl-card"><div class="hl-icon">💼</div><div class="hl-title">Placement Support</div><div class="hl-text">Portfolio review, role targeting guidance, and mock interview sessions to land your first or next dev role.</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Built from <span>Full Stack Engineering Course — 2026</span> · Powered by knowledge &amp; ☕
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('progress');
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    el.style.width = pct + '%';
+  });
+  const container = document.getElementById('dotsContainer');
+  for (let i = 0; i < 20; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.style.left = Math.random() * 100 + 'vw';
+    dot.style.bottom = '-10px';
+    dot.style.animationDuration = (12 + Math.random() * 20) + 's';
+    dot.style.animationDelay = (Math.random() * 14) + 's';
+    container.appendChild(dot);
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
